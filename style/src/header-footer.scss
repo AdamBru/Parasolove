@@ -77,15 +77,4 @@ footer {
 
 		}
 	}
-	
-	a {
-		border-bottom: 1px solid #ccc;
-		display: block;
-		padding-bottom: .2rem;
-		transition: all 0.2s ease-in-out;
-		
-		&:hover {
-			border-bottom-color: #777;
-		}
-	}
 }

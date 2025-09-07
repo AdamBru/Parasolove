@@ -6,15 +6,15 @@
 
 		<div class="flex-container justify-center align-center" style="width: fit-content">
 			<ul>
-				<li><a href="">Regulamin</a></li>
-				<li><a href="">Polityka prywatności</a></li>
-				<li><a href="">Kontakt</a></li>
+				<li><a href="" class="link">Regulamin</a></li>
+				<li><a href="" class="link">Polityka prywatności</a></li>
+				<li><a href="" class="link">Kontakt</a></li>
 			</ul>
 			
 			<ul>
-				<li><a href="">Koszyk</a></li>
-				<li><a href="">Moje konto</a></li>
-				<li><a href="">Dostawy</a></li>
+				<li><a href="" class="link">Koszyk</a></li>
+				<li><a href="" class="link">Moje konto</a></li>
+				<li><a href="" class="link">Dostawy</a></li>
 			</ul>
 		</div>
 
@@ -22,7 +22,7 @@
 			<p>Projekt i wykonanie witryny:</p>
 			<div class="flex-container justify-center" style="gap: .5rem; margin-top: .5rem;"> 
 				<img src="assets/site-images/github-mark.svg" alt="" style="height: 1.2rem; position: relative; bottom: -.2rem">
-				<a href="https://github.com/AdamBru" target="_blank" style="display: inline-block;"> AdamBru </a> &copy; 2025
+				<a href="https://github.com/AdamBru" target="_blank" class="link" style="display: inline-block;"> AdamBru </a> &copy; 2025
 			</div>
 		</div>
 

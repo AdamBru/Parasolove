@@ -14,6 +14,8 @@
 
 	<link rel="stylesheet" href="style/target/main.min.css">
 	<link rel="shortcut icon" href="assets/site-images/favicon.ico" type="image/x-icon">
+
+	<script>;</script> <!-- Stops Safari from playing CSS transitions on page load. -->
 </head>
 <body>
 	

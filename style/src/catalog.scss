@@ -1,3 +1,4 @@
+// Style dla filtrów w aside
 aside.filters {
 	display: flex;
 	flex-direction: column;
@@ -34,11 +35,14 @@ aside.filters {
 	}
 
 	#sort {
+		background: url(data:image/svg+xml;base64,PHN2ZyBpZD0iTGF5ZXJfMSIgZGF0YS1uYW1lPSJMYXllciAxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0Ljk1IDEwIj48ZGVmcz48c3R5bGU+LmNscy0xe2ZpbGw6I2ZmZjt9LmNscy0ye2ZpbGw6IzQ0NDt9PC9zdHlsZT48L2RlZnM+PHRpdGxlPmFycm93czwvdGl0bGU+PHJlY3QgY2xhc3M9ImNscy0xIiB3aWR0aD0iNC45NSIgaGVpZ2h0PSIxMCIvPjxwb2x5Z29uIGNsYXNzPSJjbHMtMiIgcG9pbnRzPSIxLjQxIDQuNjcgMi40OCAzLjE4IDMuNTQgNC42NyAxLjQxIDQuNjciLz48cG9seWdvbiBjbGFzcz0iY2xzLTIiIHBvaW50cz0iMy41NCA1LjMzIDIuNDggNi44MiAxLjQxIDUuMzMgMy41NCA1LjMzIi8+PC9zdmc+) no-repeat 95% 50%;
+    	-moz-appearance: none; 
+    	-webkit-appearance: none;
 		width: 100%;
 		font-size: .8rem;
 		border: 1px solid #ccc;
 		border-radius: 0;
-		padding: .2rem .2rem;
+		padding: .2rem .4rem;
 		margin: .7rem 0 1.2rem 0;
 
 		&:focus {
@@ -46,3 +50,67 @@ aside.filters {
 		}
 	}
 }
+
+
+.btn {
+	background: none;
+	border: 1px solid #ccc;
+	cursor: pointer;
+	transition: all 0.2s ease-in-out;
+
+	&:hover {
+		border-color: #777;
+	}
+}
+
+.link {
+	border-bottom: 1px solid #ccc;
+	display: block;
+	padding-bottom: .1rem;
+	transition: all 0.2s ease-in-out;
+	
+	&:hover {
+		border-bottom-color: #777;
+	}
+}
+
+label {cursor: pointer;}
+
+input[type="radio"], input[type="checkbox"] {
+	scale: 1.1;
+	margin-right: .2rem;
+	position: relative;
+	top: -.1rem;
+	cursor: pointer;
+}
+
+.color-checkbox {
+	display: none;
+}
+
+.color-checkbox-label {
+	width: 1rem;
+	height: 1rem;
+	border-radius: 50%;
+	cursor: pointer;
+	position: relative;
+
+		&::before {
+			content: '';
+			position: absolute;
+			top: -.2rem;
+			left: -.2rem;
+			width: 1.4rem;
+			height: 1.4rem;
+			border-radius: 50%;
+			border: 1px solid #aaa;
+			transition: all 0.2s ease-in-out;
+		}
+
+	&:has(+ .color-checkbox:checked)::before {
+		border-color: #0275ff;
+		border-width: 2px;
+	}
+}
+
+// Koniec stylów dla filtrów w aside
