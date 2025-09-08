@@ -13,13 +13,13 @@ aside.filters {
 		gap: 1rem;
 		width: 100%;
 
-		.cena-input { 
+		.cena-input {
 			display: flex;
 			flex-direction: row;
 			justify-content: center;
 			align-items: center;
 			width: 100%;
-			
+
 			input {
 				width: 100%;
 				font-size: .8rem;
@@ -27,6 +27,7 @@ aside.filters {
 				border: 1px solid #ccc;
 				border-radius: 0;
 			}
+
 			input::-webkit-outer-spin-button,
 			input::-webkit-inner-spin-button {
 				-webkit-appearance: none;
@@ -36,8 +37,8 @@ aside.filters {
 
 	#sort {
 		background: url(data:image/svg+xml;base64,PHN2ZyBpZD0iTGF5ZXJfMSIgZGF0YS1uYW1lPSJMYXllciAxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0Ljk1IDEwIj48ZGVmcz48c3R5bGU+LmNscy0xe2ZpbGw6I2ZmZjt9LmNscy0ye2ZpbGw6IzQ0NDt9PC9zdHlsZT48L2RlZnM+PHRpdGxlPmFycm93czwvdGl0bGU+PHJlY3QgY2xhc3M9ImNscy0xIiB3aWR0aD0iNC45NSIgaGVpZ2h0PSIxMCIvPjxwb2x5Z29uIGNsYXNzPSJjbHMtMiIgcG9pbnRzPSIxLjQxIDQuNjcgMi40OCAzLjE4IDMuNTQgNC42NyAxLjQxIDQuNjciLz48cG9seWdvbiBjbGFzcz0iY2xzLTIiIHBvaW50cz0iMy41NCA1LjMzIDIuNDggNi44MiAxLjQxIDUuMzMgMy41NCA1LjMzIi8+PC9zdmc+) no-repeat 95% 50%;
-    	-moz-appearance: none; 
-    	-webkit-appearance: none;
+		-moz-appearance: none;
+		-webkit-appearance: none;
 		width: 100%;
 		font-size: .8rem;
 		border: 1px solid #ccc;
@@ -67,10 +68,12 @@ input {
 	width: 100%;
 	border: 1px solid #ccc !important;
 	transition: all 0.2s ease-in-out;
-	
+
 	&:hover {
 		border-color: #777;
 	}
+
+	&[type="radio"] {width: fit-content;}
 }
 
 .link {
@@ -78,15 +81,18 @@ input {
 	display: block;
 	padding-bottom: .1rem;
 	transition: all 0.2s ease-in-out;
-	
+
 	&:hover {
 		border-bottom-color: #777;
 	}
 }
 
-label {cursor: pointer;}
+label {
+	cursor: pointer;
+}
 
-input[type="radio"], input[type="checkbox"] {
+input[type="radio"],
+input[type="checkbox"] {
 	scale: 1.1;
 	margin-right: .2rem;
 	position: relative;
@@ -105,17 +111,17 @@ input[type="radio"], input[type="checkbox"] {
 	cursor: pointer;
 	position: relative;
 
-		&::before {
-			content: '';
-			position: absolute;
-			top: -.2rem;
-			left: -.2rem;
-			width: 1.4rem;
-			height: 1.4rem;
-			border-radius: 50%;
-			border: 1px solid #aaa;
-			transition: all 0.2s ease-in-out;
-		}
+	&::before {
+		content: '';
+		position: absolute;
+		top: -.2rem;
+		left: -.2rem;
+		width: 1.4rem;
+		height: 1.4rem;
+		border-radius: 50%;
+		border: 1px solid #aaa;
+		transition: all 0.2s ease-in-out;
+	}
 
 	&:has(+ .color-checkbox:checked)::before {
 		border-color: #0275ff;
