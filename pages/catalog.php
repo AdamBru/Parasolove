@@ -1,4 +1,5 @@
 <?php
+	$title = " - katalog";
 	require_once('components/htmlBegin.php');
 	require_once('components/header.php');
 ?>

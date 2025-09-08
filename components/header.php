@@ -9,7 +9,12 @@
 
 	<div class="block header-right">
 		<!-- Skrypt php: jesli niezalogowany to Logowanie, jesli zalogowany to Moje konto i Wyloguj -->
-		<a href="/login" class="link">Logowanie</a>
+		<?php if (isset($_SESSION['user_id'])) { ?>
+			<a href="/konto" class="link">Moje konto</a>
+			<a href="/wyloguj" class="link">Wyloguj</a>
+		<?php } else { ?>
+			<a href="/login" class="link">Logowanie</a>
+		<?php } ?>
 		<!--------------------------------------------->
 
 		<a href="/koszyk" class="shopping-bag-icon"><img src="assets/site-images/shopping-bag.svg" alt="Koszyk" class="icon"></a>
