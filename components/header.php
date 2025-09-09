@@ -8,14 +8,18 @@
 	</div>
 
 	<div class="block header-right">
-		<!-- Skrypt php: jesli niezalogowany to Logowanie, jesli zalogowany to Moje konto i Wyloguj -->
-		<?php if (isset($_SESSION['user_id'])) { ?>
+		<?php if (isset($_SESSION['user_id']) && $_SESSION['user_role'] == "client") { ?>
 			<a href="/konto" class="link">Moje konto</a>
 			<a href="/wyloguj" class="link">Wyloguj</a>
+		<?php } else if (isset($_SESSION['user_id']) && $_SESSION['user_role'] == "admin") { ?>
+			<a href="/panel-sprzedawcy" class="link">Panel sprzedawcy</a>
+			<a href="/wyloguj" class="link">Wyloguj</a>
 		<?php } else { ?>
-			<a href="/login" class="link">Logowanie</a>
+			<div class="login-wrapper" style="position: relative;">
+				<span class="link" onclick="popup()" style="cursor: pointer; user-select: none;">Logowanie</span>
+				<?php require_once('components/login.php'); ?>
+			</div>
 		<?php } ?>
-		<!--------------------------------------------->
 
 		<a href="/koszyk" class="shopping-bag-icon"><img src="assets/site-images/shopping-bag.svg" alt="Koszyk" class="icon"></a>
 	</div>
@@ -32,6 +36,9 @@
 			while($row = mysqli_fetch_array($result)) {
 				echo "<li> <a href='/katalog?category=" . $row['name'] . "'> Parasole " . $row['name'] . "</a> </li>";
 			} 
+			///////////////////////////////
+				print_r($_SESSION);
+			//////////////////////////////
 		?>
 	</ul>
 </nav>
