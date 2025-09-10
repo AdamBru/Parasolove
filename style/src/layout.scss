@@ -82,5 +82,7 @@ hr {
 
 	img {
 		user-select: none;
+		aspect-ratio: 1/1;
+		object-fit: cover;
 	}
 }

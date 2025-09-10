@@ -1,5 +1,5 @@
 // Style dla filtrów w aside
-aside.filters {
+aside, aside.filters {
 	display: flex;
 	flex-direction: column;
 	flex-wrap: nowrap;
@@ -81,7 +81,7 @@ input {
 	border-bottom: 1px solid #ccc;
 	display: block;
 	padding-bottom: .1rem;
-	transition: all 0.2s ease-in-out;
+	transition: border-bottom-color 0.2s ease-in-out;
 
 	&:hover {
 		border-bottom-color: #777;

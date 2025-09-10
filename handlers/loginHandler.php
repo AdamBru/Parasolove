@@ -27,7 +27,7 @@
 			} else {
 				$_SESSION['user_id'] = $row['user_id'];
 				$_SESSION['user_role'] = $row['role_name'];
-				header('Location: /');
+				echo '<script>window.location.href = "' . $_SERVER['REQUEST_URI'] . '";</script>';
 			}
 		}
 	}
@@ -58,13 +58,11 @@
 			} else if (strlen($password) < 8) {
 				popupResult('Hasło powinno mieć co najmniej 8 znaków.', true);
 			} else if ( !preg_match("/[A-Z]/", $password) || !preg_match("/\d/", $password) || !preg_match("/\W/", $password) ) {
-				
-				
 				popupResult('Hasło powinno zawierać co najmniej jedną wielką literę, cyfrę oraz znak specjalny.', true);
-
-				////////////////// TODO: pokaż hasło
 			} else {
 				////////////////// TODO: SQL UPDATE
+				$sql = 'INSERT INTO `user` (`email`, `password_hash`) VALUES ("' . $email . '", "' . $passwordHash . '")';
+				$result = mysqli_query($conn, $sql);
 
 				echo '	<script> 
 							alert("Twoje konto zostało utworzone. Możesz się teraz zalogować.");

@@ -21,4 +21,27 @@
 		background-color: #eee;
 	}
 	
+	.show-password-container {
+		position: relative;
+		width: 100%;
+		height: fit-content;
+
+		input[type="checkbox"] {
+			display: none;
+		}
+
+		label {
+			position: absolute;
+			right: .5rem;
+			top: 0;
+			transform: translateY(-.45rem);
+			height: 1rem;
+			cursor: pointer;
+
+			img {
+				height: 100%;
+				cursor: pointer;
+			}
+		}
+	}
 }

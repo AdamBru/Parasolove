@@ -4,7 +4,7 @@
 
 .shopping-bag-icon {
 	position: relative;
-	display: inline-block; /* Zapewnia, że element 'a' będzie miał wymiary i kontekst pozycjonowania */
+	display: inline-block; 
 
 	&::after {
 		content: '0'; 
@@ -28,4 +28,15 @@
 h2 {
 	text-align: center;
 	margin: 2rem 0;
+}
+
+.see-more {
+	display: flex;
+	position: absolute;
+	right: 0;
+	top: 0;
+	height: 100%;
+	padding: 0 4rem;
+	font-size: 1.3rem;
+	background: linear-gradient(to right, transparent 0%, #fff 30%);
 }

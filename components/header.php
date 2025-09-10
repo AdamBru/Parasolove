@@ -36,9 +36,6 @@
 			while($row = mysqli_fetch_array($result)) {
 				echo "<li> <a href='/katalog?category=" . $row['name'] . "'> Parasole " . $row['name'] . "</a> </li>";
 			} 
-			///////////////////////////////
-				print_r($_SESSION);
-			//////////////////////////////
 		?>
 	</ul>
 </nav>

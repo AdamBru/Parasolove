@@ -5,26 +5,26 @@
 
 <div class="page-container align-center">
 
-	<div class="flex-container">
+	<div class="flex-container" style="align-items: start;">
 		<div class="card">
 			<img src="assets/site-images/card-0.webp" alt="Obraz z parasolem">
 			<h4>Wiodący producent parasoli</h4>
 			<hr>
-			<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic enim cumque laboriosam quaerat. </p>
+			<p>Od lat specjalizujemy się w produkcji niezawodnych parasoli, które łączą funkcjonalność z estetyką. <br> Nasze produkty chronią przed deszczem <br> i słońcem na całym świecie.</p>
 		</div>
 		
 		<div class="card">
 			<img src="assets/site-images/card-1.webp" alt="Obraz z parasolem" style="object-position: 0">
 			<h4>Jakość naszym priorytetem</h4>
 			<hr>		
-			<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic enim cumque laboriosam quaerat. </p>
+			<p>Każdy parasol przechodzi dokładną kontrolę jakości, zanim trafi <br> do Twoich rąk. <br> Dbamy o każdy detal – od materiału po mechanizm otwierania.</p>
 		</div>
 		
 		<div class="card">
 			<img src="assets/site-images/card-2.webp" alt="Obraz z parasolem">
 			<h4>Gwarancja wytrzymałości</h4>
 			<hr>
-			<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic enim cumque laboriosam quaerat. </p>
+			<p>Nasze parasole są tworzone z myślą o długotrwałym użytkowaniu, <br> nawet w najtrudniejszych warunkach. <br> Wytrzymałość to nie obietnica –<br>– to standard.</p>
 		</div>	
 	</div>
 	
@@ -32,22 +32,31 @@
 		<hr>
 		<h2> Polecane produkty </h2>
 		
-		<div class="flex-container">
+		<div class="flex-container" style="position: relative;">
 
 			<!-- skrypt generujący dynamicznie karty z produktami -->
 			<a href="" class="product-card">
-				<img src="https://placehold.co/400" alt="">
+				<img src="https://images.panda.org/assets/images/downloads/Feb2019/WWF_wallpaper_Feb2019_1440x900.jpg" alt="">
 				<hr>
 				<h5>Nazwa produktu</h5>
 				<p>cena</p>
 			</a>
 
 			<a href="" class="product-card">
-				<img src="https://placehold.co/400" alt="">
+				<img src="https://images.panda.org/assets/images/downloads/Jan2019/WWF_wallpaper_Jan2019_1440x900.jpg" alt="">
 				<hr>
 				<h5>Nazwa produktu</h5>
 				<p>cena</p>
 			</a>
+
+			<a href="" class="product-card">
+				<img src="https://img.freepik.com/free-photo/closeup-scarlet-macaw-from-side-view-scarlet-macaw-closeup-head_488145-3540.jpg?semt=ais_hybrid&w=740&q=80" alt="">
+				<hr>
+				<h5>Nazwa produktu</h5>
+				<p>cena</p>
+			</a>
+
+			<div class="see-more justify-center align-center"> <a href="/katalog" class="link">Zobacz więcej</a> </div>
 			<!------------------------------------------------------>
 			
 		</div>

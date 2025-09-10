@@ -6,8 +6,9 @@
 	$routes = [
 		'/' => 'pages/home.php',
 		'/not-found' => 'pages/404.php',
-		'/katalog' => 'pages/catalog.php',
 		'/wyloguj' => 'handlers/logout.php',
+		'/katalog' => 'pages/catalog.php',
+		'/panel-sprzedawcy' => 'pages/managePanel.php',
 	];
 
 
