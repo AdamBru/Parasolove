@@ -7,7 +7,7 @@
 		'/' => 'pages/home.php',
 		'/not-found' => 'pages/404.php',
 		'/katalog' => 'pages/catalog.php',
-		'/wyloguj' => 'pages/logout.php',
+		'/wyloguj' => 'handlers/logout.php',
 	];
 
 

@@ -10,10 +10,14 @@
 
 	<form method="post" id="login-form" class="login-form flex-container flex-column gap-xs">
 		<label for="login-email">Adres e-mail</label>
-		<input type="email" name="login-email" id="login-email">
+		<input type="email" name="login-email" id="login-email" <?= (array_key_exists("login-email", $_POST) ? 'value="'. $_POST['login-email'] .'"' : "")?>>
 
 		<label for="login-password">Hasło</label>
-		<input type="password" name="login-password" id="login-password">
+		<div class="show-password-container">
+			<input type="password" name="login-password" id="login-password" <?= (array_key_exists("login-password", $_POST) ? 'value="'. $_POST['login-password'] .'"' : "")?>>
+	<!--------------- TU POKAZ HASLO GUZICZEK  -------------->
+			<input type="checkbox" id="">
+		</div>
 		
 		<div class="flex-container justify-center">
 			<input type="submit" value="Zaloguj się" name="login">
@@ -22,14 +26,22 @@
 
 	<form method="post" id="register-form" class="login-form flex-container flex-column gap-xs">
 		<label for="register-email">Adres e-mail</label>
-		<input type="email" name="register-email" id="register-email">
+		<input type="email" name="register-email" id="register-email" <?= (array_key_exists("register-email", $_POST) ? 'value="'. $_POST['register-email'] .'"' : "")?>>
 
 		<label for="register-password">Hasło</label>
-		<input type="password" name="register-password" id="register-password">
-		
+		<div class="show-password-container">
+			<input type="password" name="register-password" id="register-password" <?= (array_key_exists("register-password", $_POST) ? 'value="'. $_POST['register-password'] .'"' : "")?>>
+	<!--------------- TU POKAZ HASLO GUZICZEK  -------------->
+			<input type="checkbox" id="">
+		</div>
+
 		<label for="register-repeat-password">Powtórz hasło</label>
-		<input type="password" name="register-repeat-password" id="register-repeat-password">
-		
+		<div class="show-password-container">
+			<input type="password" name="register-repeat-password" id="register-repeat-password">+
+	<!--------------- TU POKAZ HASLO GUZICZEK  -------------->
+			<input type="checkbox" id="">
+		</div>
+
 		<div class="flex-container justify-center">
 			<input type="submit" value="Zarejestruj się" name="register">
 		</div>
@@ -65,11 +77,10 @@
 			let popupDismiss = document.createElement("div");
 			document.body.appendChild(popupDismiss);
 			popupDismiss.classList.add("popup-dismiss");
-			popupDismiss.onclick = function () {
+			popupDismiss.onclick = function() {
 				popupWindow.style.display = "none";
 				document.body.removeChild(popupDismiss);
 			};
-
 		}
 		// for testing
 		// popup();

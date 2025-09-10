@@ -1,17 +1,13 @@
 <?php
 	function popupResult($resultText, $switchRegister) {
 		echo $resultText;
-		$echo = ($switchRegister == true) ? "true" : "false";
+		$echo = ($switchRegister == true) ? true : false;
 		echo '<script>popup(' . $echo  . ')</script>';
 	}
 
 	// Login Handler
 	if ( isset($_POST['login']) ) {
-		$loginOutput = login(trim($_POST['login-email']), $_POST['login-password'], $conn);
-	}
-
-	function refillLoginForm($email, $password) {
-		$_POST['login-password'] = $password;
+		login(trim($_POST['login-email']), $_POST['login-password'], $conn);
 	}
 
 	function login($email, $password, $conn) {
@@ -19,7 +15,6 @@
 			popupResult('Pole adres e-mail nie może być puste.', false);
 		} else if ($password == "") {
 			popupResult('Pole hasło nie może być puste.', false);
-			$_POST['login-email'] = $email;
 		} else {
 			$passwordHash = sha1(md5($password));
 
@@ -39,7 +34,7 @@
 
 	// Register Handler
 	if ( isset($_POST['register']) ) {
-		$loginOutput = login(trim($_POST['register-email']), $_POST['register-password'], $_POST['register-repeat-password'], $conn);
+		register(trim($_POST['register-email']), $_POST['register-password'], $_POST['register-repeat-password'], $conn);
 	}
 	
 	function register($email, $password, $repeatPassword, $conn) {
@@ -60,13 +55,22 @@
 			
 			if (mysqli_num_rows($result) > 0) {
 				popupResult('Użytkownik o takim adresie e-mail już istnieje.', true);
-			} else if ($TODO) {
-				////////////////// TODO: warunki złożonośći hasła
-				////////////////// TODO: poprawka switchRegister
+			} else if (strlen($password) < 8) {
+				popupResult('Hasło powinno mieć co najmniej 8 znaków.', true);
+			} else if ( !preg_match("/[A-Z]/", $password) || !preg_match("/\d/", $password) || !preg_match("/\W/", $password) ) {
+				
+				
+				popupResult('Hasło powinno zawierać co najmniej jedną wielką literę, cyfrę oraz znak specjalny.', true);
+
+				////////////////// TODO: pokaż hasło
 			} else {
 				////////////////// TODO: SQL UPDATE
-				header('Location: /');
-				echo '<script> alert("Twoje konto zostało utworzone. Możesz się teraz zalogować.") </script>';
+
+				echo '	<script> 
+							alert("Twoje konto zostało utworzone. Możesz się teraz zalogować.");
+							window.location.href = "' . $_SERVER['REQUEST_URI'] . '";
+						</script>';
+				popupResult('', true);
 			}
 		}
 	}
