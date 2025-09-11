@@ -1,13 +1,5 @@
 aside.page-options {
-	input[type="radio"] {
-		display: none;
-		&:checked + label {
-			border: 1px solid #777;
-		}
-	}
-
-	label {
-		// background-color: aquamarine;
+	a {
 		padding: .4rem .5rem;
 	}
 }
