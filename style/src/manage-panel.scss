@@ -3,3 +3,73 @@ aside.page-options {
 		padding: .4rem .5rem;
 	}
 }
+
+.table-container {
+	max-height: 400px;
+	overflow-y: scroll;
+	border: 1px solid #777;
+
+	table {
+		width: 100%;
+		border-collapse: collapse;
+	}
+
+	thead th {
+		position: sticky;
+		top: 0;
+		background-color: #fff;
+		z-index: 1;
+
+		&::after {
+			content: '';
+			position: absolute;
+			bottom: -1px;
+			left: 0;
+			width: 100%;
+			height: 1px;
+			background-color: #777;
+		}
+	}
+
+	th, td {
+		padding: .3rem .5rem;
+		text-align: start;
+
+		&:last-child {
+			text-align: end;
+			padding-right: 1rem;
+		}
+	}
+
+	td:last-child {
+		display: flex;
+		justify-content: end;
+
+		.edit {
+			display: block;
+			height: 1rem;
+			aspect-ratio: 1/1;
+			background-image: url('../../assets/site-images/edit.svg');
+			background-size: contain;
+			margin-top: .2rem;
+			cursor: pointer;
+		}
+	}
+
+	tr:nth-child(odd) {
+		background-color: #f7f7f7;
+	}
+
+	tr {
+		transition: background-color .1s ease-in-out;
+		&:hover {
+			background-color: #e3e3e366;
+		}
+	}
+}
+
+.btn.add {
+	height: fit-content;
+	width: fit-content;
+	padding: .2rem .5rem;
+}

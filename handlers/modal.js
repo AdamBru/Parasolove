@@ -1,22 +1,46 @@
+document.addEventListener("DOMContentLoaded", () => {
+	// Otwieranie modala
+	document.querySelectorAll("[data-modal-target]").forEach(button => {
+		button.addEventListener("click", () => {
+			const modal = document.querySelector(button.dataset.modalTarget);
+			openModal(modal);
+		});
+	});
 
-function modal() {
-	let modalWindow = document.getElementById("modal");
+	// Zamknięcie modala
+	document.querySelectorAll("[data-modal-dismiss]").forEach(el => {
+		el.addEventListener("click", () => {
+			const modal = el.closest(".modal");
+			closeModal(modal);
+		});
+	});
 
-	if (modalWindow.style.display == "none") { 			// if hidden - create and show 
-		// Create window-sized grayed-out flex container to center and dismiss onclick modal window  
-		let modalContainer = document.createElement("div");
-		modalContainer.classList.add("modal-container");
-		document.body.appendChild(modalContainer);
+	// Escape key
+	document.addEventListener("keydown", e => {
+		if (e.key === "Escape") {
+			document.querySelectorAll(".modal.visible").forEach(modal => {
+				closeModal(modal);
+			});
+		}
+	});
+});
 
-		modalWindow.style.display = "flex";
+function openModal(modal) {
+	if (!modal) return;
+	modal.classList.add("show");
+	document.body.classList.add("modal-open"); // blokuj scroll
+	requestAnimationFrame(() => {
+		modal.classList.add("visible");
+	});
+}
+
+function closeModal(modal) {
+	if (!modal) return;
+	if ( confirm("Czy na pewno chcesz odrzucić zmiany?") ) {
+		modal.classList.remove("visible");
+		setTimeout(() => {
+			modal.classList.remove("show");
+			document.body.classList.remove("modal-open"); // odblokuj scroll
+		}, 200); // Czas zgodny z CSS transition
 	}
-	
-	// alert with options
-	// https://www.w3schools.com/js/tryit.asp?filename=tryjs_confirm
-
-
-	modalDismiss.onclick = function() {
-		modalWindow.style.display = "none";
-		document.body.removeChild(modalDismiss);
-	};
 }

@@ -9,8 +9,9 @@
 	require_once('components/header.php');
 ?>
 
+<hr style="width: calc(100% - 4rem); padding: 1rem; margin: 0 2rem;">
 <div class="page-container">
-	<div class="flex-container">
+	<div class="flex-container flex-1">
 
 		<aside class="page-options gap-s">
 			<a href="?view=panel-home" id="view-panel-home" class="link">Panel</a>
@@ -19,7 +20,8 @@
 			<a href="?view=cupons" id="view-cupons" class="link">Kody rabatowe</a>
 		</aside>
 		
-		<?php
+		<div class="flex-container flex-column flex-1 gap-s">
+			<?php
 			if ( isset($_GET['view']) ) {
 				echo '<script> document.getElementById("view-' . $_GET['view']  . '").style.border = "1px solid #777" </script>';
 				require_once('components/managePanel/' . $_GET['view'] . '.php');
@@ -27,7 +29,8 @@
 				echo '<script> document.getElementById("view-panel-home").style.border = "1px solid #777" </script>';
 				require_once('components/managePanel/panel-home.php');
 			}
-		?>
+			?>
+		</div>
 		
 	</div>
 </div>
