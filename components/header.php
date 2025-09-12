@@ -39,3 +39,7 @@
 		?>
 	</ul>
 </nav>
+
+<?php
+	require_once('components/infoPopup.php');
+?>

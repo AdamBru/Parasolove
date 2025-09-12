@@ -40,3 +40,40 @@ h2 {
 	font-size: 1.3rem;
 	background: linear-gradient(to right, transparent 0%, #fff 30%);
 }
+
+.infoPopup {
+	--distance: 1rem;
+	// transform: translateY(calc(100% + var(--distance) + 1rem));
+	animation: slideUp 1s ease-in-out;
+	height: fit-content;
+	width: fit-content;
+	max-width: 400px;
+	background-color: #fff;
+	box-shadow: 0 0 10px #333;
+	font-size: .9rem;
+	font-weight: 300;
+	padding: .4rem .6rem;
+
+	position: absolute;
+	right: var(--distance);
+	bottom: var(--distance);
+
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+
+	p {
+		margin-right: .5rem;
+	}
+
+	button {
+		margin: auto;
+		font-size: .8rem;
+	}
+}
+
+@keyframes slideUp {
+	0% {transform: translateY(calc(100% - var(--distance) + 1rem));}
+	100% {transform: translateY(0);}
+}
