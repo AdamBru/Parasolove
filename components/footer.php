@@ -6,15 +6,15 @@
 
 		<div class="flex-container justify-center align-center" style="width: fit-content">
 			<ul>
-				<li><a href="" class="link">Regulamin</a></li>
-				<li><a href="" class="link">Polityka prywatności</a></li>
-				<li><a href="" class="link">Kontakt</a></li>
+				<li><a href="/dokumenty/regulamin" class="link">Regulamin</a></li>
+				<li><a href="/dokumenty/polityka-prywatności" class="link">Polityka prywatności</a></li>
+				<li><a href="/kontakt" class="link">Kontakt</a></li>
 			</ul>
 			
 			<ul>
-				<li><a href="" class="link">Koszyk</a></li>
-				<li><a href="" class="link">Moje konto</a></li>
-				<li><a href="" class="link">Dostawy</a></li>
+				<li><a href="/koszyk" class="link">Koszyk</a></li>
+				<li><a href="/konto" class="link">Moje konto</a></li>
+				<li><a href="/dostawy" class="link">Dostawy</a></li>
 			</ul>
 		</div>
 

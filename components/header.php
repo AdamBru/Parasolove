@@ -31,7 +31,7 @@
 		<li><a href="/katalog">Wszystkie parasole</a></li>
 
 		<?php
-			$sql = "SELECT name FROM `category`";
+			$sql = "SELECT name FROM `category` LIMIT 3";
 			$result = mysqli_query($conn, $sql);
 			while($row = mysqli_fetch_array($result)) {
 				echo "<li> <a href='/katalog?category=" . $row['name'] . "'> Parasole " . $row['name'] . "</a> </li>";
@@ -40,6 +40,25 @@
 	</ul>
 </nav>
 
-<?php
-	require_once('components/infoPopup.php');
-?>
+<div class="infoPopup flex align-center justify-center flex-column gap-m" id="cookieBox">
+	<p>Ta strona zjada ciasteczka.</p>
+	<div class="flex flex row no-wrap gap-m">
+		<a href="/dokumenty/polityka-prywatności" class="link">Polityka prywatności</a>
+		<input type="submit" id="accept-cookie" class="btn flex-0" value="OK" onclick="acceptCookie()" style="padding: .1rem .6rem;">
+	</div>
+</div>
+
+<script>
+	// Cookie
+	let cookieBox = document.getElementById("cookieBox");
+	
+	(localStorage.getItem("cookieAccepted") == "true") ? cookieBox.style.display = "none" : ""; 
+	
+	function acceptCookie() {
+		localStorage.setItem("cookieAccepted", "true");
+		cookieBox.style.animation = "slideUp .8s ease-in-out";
+		setTimeout(() => {
+			cookieBox.style.display = "none";
+		}, 800); 
+	}
+</script>

@@ -55,10 +55,9 @@
 				<h5>Nazwa produktu</h5>
 				<p>cena</p>
 			</a>
+			<!------------------------------------------------------>
 
 			<div class="see-more justify-center align-center"> <a href="/katalog" class="link">Zobacz więcej</a> </div>
-			<!------------------------------------------------------>
-			
 		</div>
 	</div>
 

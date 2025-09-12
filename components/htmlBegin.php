@@ -5,6 +5,13 @@
 	$conn = mysqli_connect($host, $user, $pass, $dbname);
 ?>
 
+<?php
+	// Cookie (moved to js with localStorage)
+	// if (isset($_POST['okCookie'])) {
+	// 	setcookie("cookie-accepted", "true", time() + (365 * 24 * 60 * 60), "/");
+	// } 
+?>
+
 <!DOCTYPE html>
 <html lang="pl">
 <head>

@@ -10,8 +10,8 @@
 ?>
 
 <hr style="width: calc(100% - 4rem); padding: 1rem; margin: 0 2rem;">
-<div class="page-container">
-	<div class="flex-container flex-1">
+<div class="page-container" style="max-width: 1600px; padding: 0 2rem">
+	<div class="flex-container flex-1" >
 
 		<aside class="page-options gap-s">
 			<a href="?view=panel-home" id="view-panel-home" class="link">Panel</a>
