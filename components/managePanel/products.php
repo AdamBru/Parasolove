@@ -65,7 +65,7 @@
 						<div class="modal" id="edit-product-' . $product['pro_product_id'] . '">
 							<div class="modal-bg" data-modal-dismiss></div>
 							<div class="modal-content">
-								<p>Edytuj produkt <span class="lato-bold">' . $product['pro_name'] .'</span></p>
+								<p style="margin-right: 3rem;">Edytuj produkt <span class="lato-bold">' . $product['pro_name'] .'</span></p>
 								<br>
 								<!-------- TODO formularz edytowania produktu -------->
 								<p>formularz edytowania produktu</p>
@@ -79,13 +79,48 @@
 	</table>
 </div>
 
+<script>
+	// FOR DEVELOPMENT
+	document.addEventListener("DOMContentLoaded", () => {
+		setTimeout(() => {
+			document.querySelector('[data-modal-target="#add-product"]')?.click();
+		}, 0);
+	});
+</script>
+
+
 <div class="modal" id="add-product">
 	<div class="modal-bg" data-modal-dismiss></div>
-	<div class="modal-content">
-		<p>Utwórz produkt</p>
+	<div class="modal-content flex-1" style="max-width: 450px">
+		<h3 class="lato-regular">Utwórz produkt</h3>
 		<br>
 		<!-------- TODO formularz dodawania produktu -------->
-		<p>formularz dodawania produktu</p>
+		<form method="post" class="new-product">
+			<div class="flex-container justify-center align-center flex-row nowrap gap-s" style="margin: 0 0 .5rem">
+				<p style="white-space: nowrap;">Informacje podstawowe</p><hr style="min-width: 3rem">
+			</div>
+				<div class="flex-container gap-s">
+					<div class="label-input-container">
+						<label for="new-product-id">ID</label>
+						<input type="text" id="new-product-id" disabled>
+					</div>
+					
+					<div class="label-input-container flex-1">
+						<label for="new-product-name">Nazwa</label>
+						<input type="text" id="new-product-name">
+					</div>
+				</div>
+
+			<div class="flex-container justify-center align-center flex-row nowrap gap-s" style="margin: 1rem 0 .5rem">
+				<p style="white-space: nowrap;">Tagi</p><hr style="min-width: 3rem">
+			</div>
+		
+		
+		
+			<div class="flex-container justify-center align-center flex-row nowrap gap-s" style="margin: 1rem 0 .5rem">
+				<p style="white-space: nowrap;">Zdjęcia</p><hr style="min-width: 3rem">
+			</div>
+		</form>
 		<div class="modal-close" data-modal-dismiss></div>
 	</div>
 </div>
