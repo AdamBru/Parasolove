@@ -4,67 +4,77 @@
 	<table>
 		<thead>
 			<tr>
-				<th>ID</th>
-				<th></th>
-				<th>Nazwa</th>
-				<th>Kategoria</th>
-				<th>Kolor</th>
-				<th>Cena</th>
-				<th>Liczba szt.</th>
+				<th> <div class="flex-container flex-row nowrap justify-center align-center gap-s">
+				ID <div class="arrow-container"> 
+							<a href="?view=products&sort=id-asc" id="arrow-id-asc" class="arrow"></a> 
+							<a href="?view=products&sort=id-desc" id="arrow-id-desc" class="arrow down"></a> 
+						</div> 
+					</div> </th>
+				<th> &nbsp; &nbsp; &nbsp; &nbsp; </th>
+				<th> <div class="flex-container flex-row nowrap justify-center align-center gap-s">
+				Nazwa <div class="arrow-container"> 
+							<a href="?view=products&sort=name-asc" id="arrow-name-asc" class="arrow"></a> 
+							<a href="?view=products&sort=name-desc" id="arrow-name-desc" class="arrow down"></a> 
+						</div> 
+					</div> </th>
+				<th> <div class="flex-container flex-row nowrap justify-center align-center gap-s">
+				Kategoria <div class="arrow-container"> 
+							<a href="?view=products&sort=category-asc" id="arrow-category-asc" class="arrow"></a> 
+							<a href="?view=products&sort=category-desc" id="arrow-category-desc" class="arrow down"></a> 
+						</div> 
+					</div> </th>
+				<th> <div class="flex-container flex-row nowrap justify-center align-center gap-s">
+				Kolor <div class="arrow-container"> 
+							<a href="?view=products&sort=color-asc" id="arrow-color-asc" class="arrow"></a> 
+							<a href="?view=products&sort=color-desc" id="arrow-color-desc" class="arrow down"></a> 
+						</div> 
+					</div> </th>
+				<th> <div class="flex-container flex-row nowrap justify-center align-center gap-s">
+				Cena <div class="arrow-container"> 
+							<a href="?view=products&sort=price-asc" id="arrow-price-asc" class="arrow"></a> 
+							<a href="?view=products&sort=price-desc" id="arrow-price-desc" class="arrow down"></a> 
+						</div> 
+					</div> </th>
+				<th> <div class="flex-container flex-row nowrap justify-center align-center gap-s">
+				Liczba szt. <div class="arrow-container"> 
+							<a href="?view=products&sort=quantity-asc" id="arrow-quantity-asc" class="arrow"></a> 
+							<a href="?view=products&sort=quantity-desc" id="arrow-quantity-desc" class="arrow down"></a> 
+						</div> 
+					</div> </th>
 				<th>Edytuj</th>
 			</tr>
 		</thead>
 		<tbody>
 			<?php
-				// TODO: sortowanie tabeli
-				$sortBy;
-				
-				$sql = 'SELECT
-							pro.product_id 		AS pro_product_id, 
-							pro.category_id 	AS pro_category_id, 
-							pro.color_id 		AS pro_color_id,
-							pro.size_id 		AS pro_size_id,
-							pro.name 			AS pro_name,
-							pro.description 	AS pro_description,
-							pro.price 			AS pro_price,
-							pro.quantity 		AS pro_quantity,
-							pro.is_archived 	AS p_is_archived,
-							category.name 		AS cat_name,
-							color.name 			AS col_name,
-							color.hex_code		AS col_hex_code,
-							size.name 			AS siz_name
-						FROM product pro 
-						JOIN category ON pro.category_Id = category.category_Id 
-						JOIN color ON pro.color_Id = color.color_Id
-						JOIN size ON pro.size_Id = size.size_Id;';
-				$result = mysqli_query($conn, $sql);
-				// for ($i = 0; $i <= 15; $i++) {
-					while ($row = mysqli_fetch_assoc($result)) {
-						echo '<tr>
-						<td>' . $row['pro_product_id'] . '</td>
-						<td>' . '<img src="https://placehold.co/40">' . '</td>
-						<td>' . $row['pro_name'] . '</td>
-						<td> <label style="background: #333333">LABEL</label>' . $row['cat_name'] . '</td>
-						<td> <label class="color-checkbox-label" style="background: #333333; top: -.4rem; cursor: auto;"></label> </td>
-						<td>' . $row['pro_price'] . ' zł</td>
-						<td>' . $row['pro_quantity'] . '</td>
-						<td><span data-modal-target="#edit-product-' . $row['id'] . '" class="edit"></span></td>
+				$sort = $_GET['sort'] ?? 'default';
+				foreach (getProducts($conn, $sort) as $product) {
+					for ($i = 0; $i <= 15; $i++) {
+					echo '<tr>
+							<td>' . $product['pro_product_id'] . '</td>
+							<td class="td-img">' . getProductImage($product['pro_product_id'], 0) . '</td>
+							<td>' . textTooLong($product['pro_name'], 45) . '</td>
+							<td>' . $product['cat_name'] . '</td>
+							<td class="td-color"> <label class="color-checkbox-label" style="background: ' . $product['col_hex_code'] . '; cursor: auto;"></label> </td>
+							<td>' . $product['pro_price'] . ' zł</td>
+							<td>' . $product['pro_quantity'] . '</td>
+							<td><span data-modal-target="#edit-product-' . $product['pro_product_id'] . '" class="edit"></span></td>
 						</tr>';
+
+					//TODO: Modal: edytuj produkt #edit-product-ID
+					echo '
+						<div class="modal" id="edit-product-' . $product['pro_product_id'] . '">
+							<div class="modal-bg" data-modal-dismiss></div>
+							<div class="modal-content">
+								<p>Edytuj produkt <span class="lato-bold">' . $product['pro_name'] .'</span></p>
+								<br>
+								<!-------- TODO formularz edytowania produktu -------->
+								<p>formularz edytowania produktu</p>
+								<div class="modal-close" data-modal-dismiss></div>
+							</div>
+						</div>';
 					}
-				// }
-			?>
-			<!-- <tr><td>1</td><td> <img src="https://placehold.co/40"> Elegancki parasol</td><td>79,99</td><td>115</td><td><span data-modal-target="#edit-product-1" class="edit"></span></td></tr>
-			<tr><td>1</td><td>Elegancki parasol</td><td>79,99</td><td>115</td><td><span data-modal-target="#edit-product-1" class="edit"></span></td></tr>
-			<tr><td>1</td><td>Elegancki parasol</td><td>79,99</td><td>115</td><td><span data-modal-target="#edit-product-1" class="edit"></span></td></tr>
-			<tr><td>1</td><td>Elegancki parasol</td><td>79,99</td><td>115</td><td><span data-modal-target="#edit-product-1" class="edit"></span></td></tr>
-			<tr><td>1</td><td>Elegancki parasol</td><td>79,99</td><td>115</td><td><span data-modal-target="#edit-product-1" class="edit"></span></td></tr>
-			<tr><td>1</td><td>Elegancki parasol</td><td>79,99</td><td>115</td><td><span data-modal-target="#edit-product-1" class="edit"></span></td></tr>
-			<tr><td>1</td><td>Elegancki parasol</td><td>79,99</td><td>115</td><td><span data-modal-target="#edit-product-1" class="edit"></span></td></tr>
-			<tr><td>1</td><td>Elegancki parasol</td><td>79,99</td><td>115</td><td><span data-modal-target="#edit-product-1" class="edit"></span></td></tr>
-			<tr><td>1</td><td>Elegancki parasol</td><td>79,99</td><td>115</td><td><span data-modal-target="#edit-product-1" class="edit"></span></td></tr>
-			<tr><td>1</td><td>Elegancki parasol</td><td>79,99</td><td>115</td><td><span data-modal-target="#edit-product-1" class="edit"></span></td></tr>
-			<tr><td>1</td><td>Elegancki parasol</td><td>79,99</td><td>115</td><td><span data-modal-target="#edit-product-1" class="edit"></span></td></tr>
-			<tr><td>1</td><td>Elegancki parasol</td><td>79,99</td><td>115</td><td><span data-modal-target="#edit-product-1" class="edit"></span></td></tr> -->
+				}
+				?>
 		</tbody>
 	</table>
 </div>
@@ -79,3 +89,8 @@
 		<div class="modal-close" data-modal-dismiss></div>
 	</div>
 </div>
+
+<script>
+	// Podkreślenie strzałki wybranego sortowania
+	document.getElementById("arrow-<?=$_GET['sort']?>") ? document.getElementById("arrow-<?=$_GET['sort']?>").style.opacity = "1" : "";
+</script>

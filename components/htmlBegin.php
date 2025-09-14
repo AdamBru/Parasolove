@@ -3,6 +3,8 @@
 
 	require_once('db/config.php');
 	$conn = mysqli_connect($host, $user, $pass, $dbname);
+
+	require_once('handlers/functions.php');
 ?>
 
 <?php

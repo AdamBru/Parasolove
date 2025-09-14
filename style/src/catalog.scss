@@ -112,6 +112,7 @@ input[type="checkbox"] {
 	border-radius: 50%;
 	cursor: pointer;
 	position: relative;
+	display: block;
 
 	&::before {
 		content: '';

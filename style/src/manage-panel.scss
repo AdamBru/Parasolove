@@ -20,7 +20,7 @@ aside.page-options {
 			position: sticky;
 			top: 0;
 			background-color: #fff;
-			z-index: 1;
+			z-index: 3;
 			
 			&::after {
 				content: '';
@@ -34,9 +34,12 @@ aside.page-options {
 		}
 		
 		th, td {
-			padding: .3rem .8rem;
+			padding: 1rem 1rem;
 			text-align: start;
+			position: relative;
+			z-index: 2;
 
+			// Dla knonkretnych kolumn
 			&:nth-of-type(3) {
 				width: 100%;
 			}
@@ -44,6 +47,22 @@ aside.page-options {
 			&:last-child {
 				text-align: end;
 				padding-right: 1rem;
+			}
+
+			&.td-color {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				height: 100%;
+			}
+
+			&.td-img {
+				padding: .1rem;
+				img {
+					height: 100%;
+					aspect-ratio: 1/1;
+					object-fit: cover;
+				}
 			}
 		}
 		
@@ -66,10 +85,23 @@ aside.page-options {
 			background-color: #f7f7f7;
 		}
 		
-		tr {
-			transition: background-color .1s ease-in-out;
-			&:hover {
-				background-color: #e3e3e366;
+		tr:has(td) {
+			position: relative;
+			
+			&:after {
+				content: '';
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				z-index: 1;
+				pointer-events: none;
+				transition: background-color .1s ease-in-out;
+			}
+
+			&:hover::after {
+				background-color: rgba(0, 0, 0, 0.05);
 			}
 		}
 	}

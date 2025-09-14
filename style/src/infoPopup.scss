@@ -1,0 +1,43 @@
+.infoPopup {
+	animation: slideDown .8s ease-out;
+	height: fit-content;
+	width: fit-content;
+	max-width: 400px;
+	background-color: #fff;
+	box-shadow: 0 0 20px -5px #999;
+	font-size: .9rem;
+	font-weight: 300;
+	padding: 1rem 2rem;
+	z-index: 4;
+	
+	position: fixed;
+	--distance: 1rem;
+	right: var(--distance);
+	bottom: var(--distance);
+
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+
+	p {
+		margin-right: .5rem;
+	}
+
+	button {
+		margin: auto;
+		font-size: .8rem;
+	}
+}
+
+@keyframes slideDown {
+	0% {opacity: 0; transform: translateY(-10rem);}
+	75% {opacity: 1;}
+	100% {opacity: 1; transform: translateY(0);}
+}
+
+@keyframes slideUp {
+	0% {opacity: 1; transform: translateY(0);}
+	25% {opacity: 1;}
+	100% {opacity: 0; transform: translateY(-10rem);}
+}

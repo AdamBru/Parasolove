@@ -11,11 +11,14 @@
 
 			<div>
 				<p style="font-size: 1.2rem;">Sortowanie</p>
-				<select name="sort" id="sort">
-					<option value="default">Domyślne</option>
-					<option value="price-asc">Cena rosnąco</option>
-					<option value="price-desc">Cena malejąco</option>
-				</select>
+				<form method="get" name="sort">
+					<select name="sort" id="sort" onchange="this.form.submit()">
+						<?php $sort = $_GET['sort'] ?? 'default'; ?>
+						<option value="default" <?= $sort == 'default' ? 'selected' : ''?>>Domyślne</option>
+						<option value="price-asc" <?= $sort == 'price-asc' ? 'selected' : ''?>>Cena rosnąco</option>
+						<option value="price-desc" <?= $sort == 'price-desc' ? 'selected' : ''?>>Cena malejąco</option>
+					</select>
+				</form>
 			</div>
 
 			<!-- Filtry -->
@@ -68,58 +71,18 @@
 		</aside>	
 	
 		
-		<!-- Dynamicznie generowana lista produktów -->
 		<div class="flex-container flex-1" style="gap: 1rem;">
-			<!-- skrypt generujący dynamicznie karty z produktami -->
-			<a href="/product?id=1" class="product-card">
-				<img src="https://placehold.co/400" alt="">
-				<hr>
-				<h5>Nazwa produktu</h5>
-				<p>cena</p>
-			</a>
-
-			<a href="" class="product-card">
-				<img src="https://placehold.co/400" alt="">
-				<hr>
-				<h5>Nazwa produktu</h5>
-				<p>cena</p>
-			</a>
-
-			<a href="" class="product-card">
-				<img src="https://placehold.co/400" alt="">
-				<hr>
-				<h5>Nazwa produktu</h5>
-				<p>cena</p>
-			</a>
-
-			<a href="" class="product-card">
-				<img src="https://placehold.co/400" alt="">
-				<hr>
-				<h5>Nazwa produktu</h5>
-				<p>cena</p>
-			</a>
-
-			<a href="" class="product-card">
-				<img src="https://placehold.co/400" alt="">
-				<hr>
-				<h5>Nazwa produktu</h5>
-				<p>cena</p>
-			</a>
-
-			<a href="" class="product-card">
-				<img src="https://placehold.co/400" alt="">
-				<hr>
-				<h5>Nazwa produktu</h5>
-				<p>cena</p>
-			</a>
-
-			<a href="" class="product-card">
-				<img src="https://placehold.co/400" alt="">
-				<hr>
-				<h5>Nazwa produktu</h5>
-				<p>cena</p>
-			</a>
-			<!------------------------------------------------------>
+		<!-- Dynamicznie generowana lista produktów -->
+			<?php
+				foreach (getProducts($conn, $sort) as $product) {
+					echo '<a href="/product?id=' . $product['pro_product_id'] . '" class="product-card">
+							'. getProductImage($product['pro_product_id'], 0) .'
+							<hr>
+							<h5>' . $product['pro_name'] . '</h5>
+							<p>' . $product['pro_price'] . ' zł</p>
+						</a>';
+				}
+			?>
 	
 		</div>
 
