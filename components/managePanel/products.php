@@ -83,7 +83,7 @@
 	// FOR DEVELOPMENT
 	document.addEventListener("DOMContentLoaded", () => {
 		setTimeout(() => {
-			document.querySelector('[data-modal-target="#add-product"]')?.click();
+			document.querySelector('[data-modal-target="#add-product"]').click();
 		}, 0);
 	});
 </script>
@@ -91,37 +91,94 @@
 
 <div class="modal" id="add-product">
 	<div class="modal-bg" data-modal-dismiss></div>
-	<div class="modal-content flex-1" style="max-width: 450px">
-		<h3 class="lato-regular">Utwórz produkt</h3>
-		<br>
+	<div class="modal-content flex-1">
+		<div style="padding: .8rem 1rem; position: sticky; top: 0; background: #fff; box-shadow: 0 0 15px -5px #333;">
+			<div class="modal-close" data-modal-dismiss></div>
+			<h3 class="lato-regular">Utwórz produkt</h3>
+		</div>
+		
 		<!-------- TODO formularz dodawania produktu -------->
-		<form method="post" class="new-product">
+		<form method="post" class="new-product" style="margin: 1.5rem">
+			<!-- Nowy produkt: Informacje podstawowe -->
 			<div class="flex-container justify-center align-center flex-row nowrap gap-s" style="margin: 0 0 .5rem">
 				<p style="white-space: nowrap;">Informacje podstawowe</p><hr style="min-width: 3rem">
 			</div>
 				<div class="flex-container gap-s">
-					<div class="label-input-container">
-						<label for="new-product-id">ID</label>
-						<input type="text" id="new-product-id" disabled>
+					<!-- Nowy produkt: Informacje podstawowe: ID i Nazwa -->
+					<div class="flex-container gap-s">
+						<div class="label-input-container">
+							<label for="new-product-id">ID</label>
+							<input type="text" name="new-product-id" id="new-product-id" disabled>
+						</div>
+						<div class="label-input-container flex-1">
+							<label for="new-product-name">Nazwa</label>
+							<input type="text" name="new-product-name" id="new-product-name">
+						</div>
 					</div>
 					
-					<div class="label-input-container flex-1">
-						<label for="new-product-name">Nazwa</label>
-						<input type="text" id="new-product-name">
+					<!-- Nowy produkt: Informacje podstawowe: Opis -->
+					<div class="flex-container gap-s">
+						<div class="label-input-container flex-1">
+							<label for="new-product-description">Opis</label>
+							<textarea type="text" class="" name="new-product-description" id="new-product-description"></textarea>
+						</div>
+					</div>
+
+					<!-- Nowy produkt: Informacje podstawowe: Cena i Liczba sztuk -->
+					<div class="flex-container gap-s">
+						<div class="label-input-container flex-1">
+							<label for="new-product-id">Cena</label>
+							<input type="text" name="new-product-price" id="new-product-price">
+						</div>
+						<div class="label-input-container flex-1">
+							<label for="new-product-name">Lizcba sztuk</label>
+							<input type="text" name="new-product-quantity" id="new-product-quantity">
+						</div>
 					</div>
 				</div>
 
+			<!-- Nowy produkt: Tagi -->
 			<div class="flex-container justify-center align-center flex-row nowrap gap-s" style="margin: 1rem 0 .5rem">
 				<p style="white-space: nowrap;">Tagi</p><hr style="min-width: 3rem">
 			</div>
-		
+				<div class="flex-container gap-xs">
+					<!-- Nowy produkt: Tagi: Kategoria -->
+					<div class="flex-container">
+						<label for="new-product-category">Kategoria</label>
+						<select name="new-product-category" id="new-product-category">
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+						</select>
+					</div>
+
+					<!-- Nowy produkt: Tagi: Kolor -->
+					<div class="flex-container">
+						<label for="new-product-color">Kolor</label>
+						<select name="new-product-color" id="new-product-color">
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+						</select>
+					</div>
+
+					<!-- Nowy produkt: Tagi: Rozmiar -->
+					<div class="flex-container">
+						<label for="new-product-size">Rozmiar</label>
+						<select name="new-product-size" id="new-product-size">
+							<option value="1">cat 1</option>
+							<option value="2">cat 2</option>
+							<option value="3">cat 3</option>
+						</select>
+					</div>
+
+				</div>
 		
 		
 			<div class="flex-container justify-center align-center flex-row nowrap gap-s" style="margin: 1rem 0 .5rem">
 				<p style="white-space: nowrap;">Zdjęcia</p><hr style="min-width: 3rem">
 			</div>
 		</form>
-		<div class="modal-close" data-modal-dismiss></div>
 	</div>
 </div>
 

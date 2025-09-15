@@ -40,7 +40,7 @@
 	</ul>
 </nav>
 
-<div class="infoPopup flex align-center justify-center flex-column gap-m" id="cookieBox">
+<div class="infoPopup flex align-center justify-center flex-column wrap gap-m" id="cookieBox">
 	<p>Ta strona zjada ciasteczka.</p>
 	<div class="flex flex row no-wrap gap-m">
 		<a href="/dokumenty/polityka-prywatności" class="link">Polityka prywatności</a>

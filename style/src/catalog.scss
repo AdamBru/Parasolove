@@ -65,7 +65,7 @@ aside, aside.filters {
 	}
 }
 
-input {
+input, textarea, select {
 	width: 100%;
 	border: 1px solid #ccc !important;
 	transition: all 0.2s ease-in-out;
@@ -76,6 +76,13 @@ input {
 
 	&[type="radio"] {width: fit-content;}
 }
+
+	textarea {
+		resize: none;
+		height: 5rem;
+		font-size: .85rem;
+		padding: .3rem .4rem;
+	}
 
 .link {
 	border-bottom: 1px solid #ccc;
