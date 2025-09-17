@@ -67,7 +67,7 @@
 							<div class="modal-content">
 								<p style="margin-right: 3rem;">Edytuj produkt <span class="lato-bold">' . $product['pro_name'] .'</span></p>
 								<br>
-								<!-------- TODO formularz edytowania produktu -------->
+						<!-------- TODO formularz edytowania produktu -------->
 								<p>formularz edytowania produktu</p>
 								<div class="modal-close" data-modal-dismiss></div>
 							</div>
@@ -92,7 +92,7 @@
 <div class="modal" id="add-product">
 	<div class="modal-bg" data-modal-dismiss></div>
 	<div class="modal-content flex-1">
-		<div style="padding: .8rem 1rem; position: sticky; top: 0; background: #fff; box-shadow: 0 0 15px -5px #333;">
+		<div class="modal-header">
 			<div class="modal-close" data-modal-dismiss></div>
 			<h3 class="lato-regular">Utwórz produkt</h3>
 		</div>
@@ -185,4 +185,68 @@
 <script>
 	// Podkreślenie strzałki wybranego sortowania
 	document.getElementById("arrow-<?=$_GET['sort']?>") ? document.getElementById("arrow-<?=$_GET['sort']?>").style.opacity = "1" : "";
+
+	// Cień nagłówka modala przy przewijaniu
+	document.addEventListener("DOMContentLoaded", () => {
+		const modal = document.querySelector("#add-product .modal-content");
+		const header = document.querySelector("#add-product .modal-header");
+
+		if (modal && header) {
+			modal.addEventListener("scroll", () => {
+				if (modal.scrollTop >= 40) {
+					header.style.boxShadow = "0 -10px 20px #555";
+				} else {
+					header.style.boxShadow = "none";
+				}
+			});
+		}
+	});
 </script>
+<!-- <script>
+	let modalContainer = document.querySelector(".modal-content");
+	modalContainer.onscroll = function() {
+		console.log(modalContainer); // sprawdź czy istnieje
+		if (modalContainer.scrollTop > 50) {
+			modalContainer.style.background = "tomato";
+			console.log(modalContainer.scrollTop);
+		} else {
+			modalContainer.style.background = "#fff";
+		}
+	}
+</script> -->
+
+	<!-- <script>
+		let modalContainer = document.querySelector(".modal-content");
+		let modalHeader = document.querySelector(".modal-header");
+
+		if (modalContainer) {
+			modalContainer.addEventListener("scroll", () => {
+				consol.log(' znaleziono modala');
+				if (modalContainer.scrollTop >= 40) {
+					modalHeader.style.boxShadow = "0 0 15px #777";
+				} else {
+					modalHeader.style.boxShadow = "";
+				}
+			});
+		} else {
+			consol.log('nie znaleziono modala');
+		}
+	</script> -->
+<!-- 
+<script>
+window.onload =  function() {
+	let modalContainer = document.querySelector(".modal-content");
+
+	if (modalContainer) {
+		modalContainer.onscroll = function () {
+			console.log("scrollTop:", modalContainer.scrollTop); // czy działa?
+
+			if (modalContainer.scrollTop > 50) {
+				modalContainer.style.background = "tomato";
+			} else {
+				modalContainer.style.background = "#fff";
+			}
+		};
+	}
+};
+</script> -->

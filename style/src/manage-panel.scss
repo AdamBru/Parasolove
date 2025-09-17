@@ -120,6 +120,15 @@ aside.page-options {
 	max-width: 450px; 
 	height: 100%;
 	padding: 0;
+
+	.modal-header {
+		padding: .8rem 1rem; 
+		position: sticky; 
+		top: 0; 
+		background: #fff;
+		transition: all .15s ease-in-out; 
+		// box-shadow: 0 -10px 20px #555;
+	}
 }
 
 form.new-product {
