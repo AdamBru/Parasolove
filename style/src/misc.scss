@@ -64,3 +64,24 @@ h2 {
 	font-size: 1.3rem;
 	background: linear-gradient(to right, transparent 0%, #fff 30%);
 }
+
+.error-chmurka {
+	text-align: center;
+	background: #bb6b6b;
+	color: #fff;
+	padding: .3rem .6rem;
+	width: 450px;
+	position: fixed;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -300px);
+	animation: fadeOut 3s;
+	opacity: 0;
+	pointer-events: none;
+}
+
+@keyframes fadeOut {
+	0% {opacity: 100%;}
+	50% {opacity: 100%;}
+	100% {opacity: 0;}
+}

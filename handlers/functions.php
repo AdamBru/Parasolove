@@ -19,7 +19,7 @@
 
 	function getProducts($conn, $sort = 'default') {
 		$sortOptions = [
-			'default' => 'pro_product_id ASC',
+			'default' => 'pro_product_id DESC',
 			'price-asc' => 'pro_price ASC',
 			'price-desc' => 'pro_price DESC',
 			'name-asc' => 'pro_name ASC',
@@ -30,8 +30,8 @@
 			'id-desc' => 'pro_product_id DESC',
 			'color-asc' => 'cat_name ASC',
 			'color-desc' => 'cat_name DESC',
-			'size-asc' => 'size_name ASC',
-			'size-desc' => 'size_name DESC',
+			'size-asc' => 'siz_name ASC',
+			'size-desc' => 'siz_name DESC',
 			'quantity-asc' => 'pro_quantity ASC',
 			'quantity-desc' => 'pro_quantity DESC'
 		];
@@ -65,6 +65,10 @@
 		// Użycie
 		// $sort = $_GET['sort'] ?? 'default';
 		// $produkty = getProducts($conn, $sort); || foreach (getProducts($conn, $sort) as $product) {}
+	}
+
+	function uploadFile() {
+		
 	}
 
 ?>

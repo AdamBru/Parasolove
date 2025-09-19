@@ -42,9 +42,9 @@ function closeModal(modal) {
 			modal.classList.remove("show");
 			document.body.classList.remove("modal-open"); // odblokuj scroll
 		}, 200); // Czas zgodny z CSS transition
-		let allInputs = modal.querySelectorAll("input, textarea");
-		allInputs.forEach(element => {
-			element.value = "";
-		});
+		// let allInputs = modal.querySelectorAll("input, textarea");
+		// allInputs.forEach(element => {
+		// 	element.value = "";
+		// });
 	}
 }

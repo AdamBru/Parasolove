@@ -54,7 +54,7 @@ aside, aside.filters {
 }
 
 
-.btn {
+.btn, ::-webkit-file-upload-button {
 	background: none;
 	border: 1px solid #ccc;
 	cursor: pointer;
@@ -64,6 +64,15 @@ aside, aside.filters {
 		border-color: #777;
 	}
 }
+	::-webkit-file-upload-button {
+		border: none;
+		border-right: 1px solid #ccc;
+		padding-right: .5rem;
+		margin-right: .5rem;
+		&:hover {
+			border-right: 1px solid #ccc;
+		}
+	}
 
 input, textarea, select {
 	width: 100%;

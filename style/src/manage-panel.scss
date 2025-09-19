@@ -5,7 +5,7 @@ aside.page-options {
 }
 
 .table-container {
-	max-height: 400px;
+	max-height: 500px;
 	overflow-y: scroll;
 	border: 1px solid #777;
 	width: 100%;
@@ -138,15 +138,21 @@ form.new-product {
 		justify-content: center;
 		align-items: start;
 
-		label {
+		
+		input, select, option {
 			font-size: .85rem;
-			color: #333;
-		}
+			padding: .2rem .3rem;
 
-		input {
 			&#new-product-id {
 				width: 3rem;
 			}
 		}
+	}
+	
+	label {
+		font-size: .85rem;
+		color: #555;
+		cursor: auto;
+		pointer-events: none;
 	}
 }

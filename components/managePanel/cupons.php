@@ -13,19 +13,25 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr><td>1</td><td>RABAT</td><td>15%</td><td>01-01-2025</td><td><span data-modal-target="#edit-cupon-1" class="edit"></span></td></tr>
-			<tr><td>1</td><td>RABAT</td><td>15%</td><td>01-01-2025</td><td><span data-modal-target="#edit-cupon-1" class="edit"></span></td></tr>
-			<tr><td>1</td><td>RABAT</td><td>15%</td><td>01-01-2025</td><td><span data-modal-target="#edit-cupon-1" class="edit"></span></td></tr>
-			<tr><td>1</td><td>RABAT</td><td>15%</td><td>01-01-2025</td><td><span data-modal-target="#edit-cupon-1" class="edit"></span></td></tr>
-			<tr><td>1</td><td>RABAT</td><td>15%</td><td>01-01-2025</td><td><span data-modal-target="#edit-cupon-1" class="edit"></span></td></tr>
-			<tr><td>1</td><td>RABAT</td><td>15%</td><td>01-01-2025</td><td><span data-modal-target="#edit-cupon-1" class="edit"></span></td></tr>
-			<tr><td>1</td><td>RABAT</td><td>15%</td><td>01-01-2025</td><td><span data-modal-target="#edit-cupon-1" class="edit"></span></td></tr>
-			<tr><td>1</td><td>RABAT</td><td>15%</td><td>01-01-2025</td><td><span data-modal-target="#edit-cupon-1" class="edit"></span></td></tr>
-			<tr><td>1</td><td>RABAT</td><td>15%</td><td>01-01-2025</td><td><span data-modal-target="#edit-cupon-1" class="edit"></span></td></tr>
-			<tr><td>1</td><td>RABAT</td><td>15%</td><td>01-01-2025</td><td><span data-modal-target="#edit-cupon-1" class="edit"></span></td></tr>
-			<tr><td>1</td><td>RABAT</td><td>15%</td><td>01-01-2025</td><td><span data-modal-target="#edit-cupon-1" class="edit"></span></td></tr>
-			<tr><td>1</td><td>RABAT</td><td>15%</td><td>01-01-2025</td><td><span data-modal-target="#edit-cupon-1" class="edit"></span></td></tr>
-			<tr><td>1</td><td>RABAT</td><td>15%</td><td>01-01-2025</td><td><span data-modal-target="#edit-cupon-1" class="edit"></span></td></tr>
+			<?php
+				$sql = 'SELECT * FROM `cupon`;';
+				$result = mysqli_query($conn, $sql);
+				while ($row = mysqli_fetch_assoc($result)) {
+					if (time() - strtotime($row['active_to']) > 0) {
+						echo '<tr style="background: #f8fe3875">';
+					} else {
+						echo '<tr>';
+					}
+					
+					echo '	<td>' . $row['cupon_id'] . '</td>
+							<td>' . $row['code'] . '</td>
+							<td>' . $row['discount'] . '% </td>
+							<td>' . $row['active_to'] . '</td>
+							<td><span data-modal-target="#edit-cupon-' . $row['cupon_id'] . '" class="edit"></span></td>
+						</tr>
+					';
+				}
+			?>
 		</tbody>
 	</table>
 </div>

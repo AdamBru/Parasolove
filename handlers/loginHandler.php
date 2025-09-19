@@ -60,7 +60,6 @@
 			} else if ( !preg_match("/[A-Z]/", $password) || !preg_match("/\d/", $password) || !preg_match("/\W/", $password) ) {
 				popupResult('Hasło powinno zawierać co najmniej jedną wielką literę, cyfrę oraz znak specjalny.', true);
 			} else {
-				////////////////// TODO: SQL UPDATE
 				$sql = 'INSERT INTO `user` (`email`, `password_hash`) VALUES ("' . $email . '", "' . $passwordHash . '")';
 				$result = mysqli_query($conn, $sql);
 

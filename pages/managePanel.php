@@ -1,11 +1,11 @@
 <?php
+	$title = " - panel sprzedawcy";
 	require_once('components/htmlBegin.php');
 	
 	if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] != 'admin') {
 		header('Location: /not-found');
 	}
 		
-	$title = " - panel sprzedawcy";
 	require_once('components/header.php');
 ?>
 

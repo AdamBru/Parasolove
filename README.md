@@ -5,4 +5,5 @@
 		- formularz edytowania kuponu
 	- inwentarz
 		- formularz dodawania produktu (HIGHEST PRIORITY)
+		- formularz edytowania produktu
 	- zamówienia

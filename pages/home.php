@@ -34,7 +34,7 @@
 		
 		<div class="flex-container" style="position: relative;">
 
-			<!-- skrypt generujący dynamicznie karty z produktami -->
+			<!-- Skrypt generujący dynamicznie karty z produktami -->
 			<a href="" class="product-card">
 				<img src="https://images.panda.org/assets/images/downloads/Feb2019/WWF_wallpaper_Feb2019_1440x900.jpg" alt="">
 				<hr>

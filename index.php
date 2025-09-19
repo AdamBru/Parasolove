@@ -1,4 +1,9 @@
 <?php
+	// Show errors
+
+	error_reporting(E_ALL);
+	ini_set('display_errors', 'On');
+
 	// Router
 
 	$uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
@@ -9,6 +14,7 @@
 		'/wyloguj' => 'handlers/logout.php',
 		'/katalog' => 'pages/catalog.php',
 		'/panel-sprzedawcy' => 'pages/managePanel.php',
+		'/temp' => 'pages/TEMP.php',
 	];
 
 

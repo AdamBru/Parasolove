@@ -2,7 +2,14 @@
 	session_start();
 
 	require_once('db/config.php');
-	$conn = mysqli_connect($host, $user, $pass, $dbname);
+
+	mysqli_report(MYSQLI_REPORT_OFF);
+	$conn = @mysqli_connect($host, $user, $pass, $dbname);
+	if (!$conn) {
+		http_response_code(500);
+		require_once('pages/500.php');
+		exit;
+	}
 
 	require_once('handlers/functions.php');
 ?>
