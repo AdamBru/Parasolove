@@ -72,17 +72,35 @@
 	
 		
 		<div class="flex-container flex-1" style="gap: 1rem;">
-		<!-- Dynamicznie generowana lista produktów -->
+			<!-- Dynamicznie generowana lista produktów -->
 			<?php
-				foreach (getProducts($conn, $sort) as $product) {
-					echo '<a href="/product?id=' . $product['pro_product_id'] . '" class="product-card">
-							'. getProductImage($product['pro_product_id'], 0) .'
+				$data = getProducts($conn, $sort, true);
+				$products = $data['products'];
+				$currentPage = $data['pagination']['currentPage'];
+				$totalPages = $data['pagination']['totalPages'];
+
+				foreach ($products as $product) {
+					echo '<a href="/produkt?id=' . $product['pro_product_id'] . '" class="product-card">
+							'. getProductImage($product['pro_product_id']) .'
 							<hr>
-							<h5>' . $product['pro_name'] . '</h5>
+							<h4>' . $product['pro_name'] . '</h4>
 							<p>' . $product['pro_price'] . ' zł</p>
 						</a>';
 				}
 			?>
+
+			<!-- Paginacja -->
+			<div class="flex-container align-center justify-center nowrap" style="gap: 1.75rem; margin-top: 2rem;">
+				<a href="<?= ($currentPage > 1) ? '?page=' . $currentPage - 1 : '' ?>">&lt;</a>
+
+				<!-- Numery stron -->
+				<?php for ($i = 1; $i <= $totalPages; $i++) { ?>
+					<a href="?page=<?= $i ?>" <?= ($i == $currentPage) ? 'class="pagination-active"' : '' ?>> <?= $i ?> </a>
+				<?php } ?>
+
+				<a href="<?= ($currentPage < $totalPages) ? '?page=' . $currentPage + 1 : '' ?>">&gt;</a>
+			</div>
+
 	
 		</div>
 

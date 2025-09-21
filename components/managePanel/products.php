@@ -56,7 +56,12 @@
 		<tbody>
 			<?php
 				$sort = $_GET['sort'] ?? 'default';
-				foreach (getProducts($conn, $sort) as $product) {
+				$data = getProducts($conn, $sort, false);
+				$products = $data['products'];
+				$currentPage = $data['pagination']['currentPage'];
+				$totalPages = $data['pagination']['totalPages'];
+
+				foreach ($products as $product) {
 					echo '<tr ' . ( ($product['p_is_archived'] == 1) ? 'style="background: #f8fe3875;"' : '' ) . '>
 							<td>' . $product['pro_product_id'] . '</td>
 							<td class="td-img">' . getProductImage($product['pro_product_id'], 0) . '</td>

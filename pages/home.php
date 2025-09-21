@@ -36,24 +36,27 @@
 
 			<!-- Skrypt generujący dynamicznie karty z produktami -->
 			<a href="" class="product-card">
-				<img src="https://images.panda.org/assets/images/downloads/Feb2019/WWF_wallpaper_Feb2019_1440x900.jpg" alt="">
+				<!-- <img src="https://images.panda.org/assets/images/downloads/Feb2019/WWF_wallpaper_Feb2019_1440x900.jpg" alt=""> -->
+				<img src="https://printexpress.pl/wp-content/uploads/2024/03/mo2168-03.jpg" alt="Prasol klasyczny">
 				<hr>
-				<h5>Nazwa produktu</h5>
-				<p>cena</p>
+				<h5>Parasol klasyczny</h5>
+				<p>49.99 zł</p>
 			</a>
 
 			<a href="" class="product-card">
-				<img src="https://images.panda.org/assets/images/downloads/Jan2019/WWF_wallpaper_Jan2019_1440x900.jpg" alt="">
+				<!-- <img src="https://images.panda.org/assets/images/downloads/Jan2019/WWF_wallpaper_Jan2019_1440x900.jpg" alt=""> -->
+				<img src="https://i5.walmartimages.com/seo/Wildkin-Kids-Umbrella-for-Boys-and-Girls-Jurassic-Dinosaurs-Blue_e109964d-d583-4786-941c-2bb54be411e1.840aa997f2ba89b61a5879bc239d652b.jpeg" alt="Parasol dinozaur">
 				<hr>
-				<h5>Nazwa produktu</h5>
-				<p>cena</p>
+				<h5>Parasol dinozaur</h5>
+				<p>39.99 zł</p>
 			</a>
 
 			<a href="" class="product-card">
-				<img src="https://img.freepik.com/free-photo/closeup-scarlet-macaw-from-side-view-scarlet-macaw-closeup-head_488145-3540.jpg?semt=ais_hybrid&w=740&q=80" alt="">
+				<!-- <img src="https://img.freepik.com/free-photo/closeup-scarlet-macaw-from-side-view-scarlet-macaw-closeup-head_488145-3540.jpg?semt=ais_hybrid&w=740&q=80" alt=""> -->
+				<img src="https://printexpress.pl/wp-content/uploads/2024/03/mo8326-22.jpg" alt="Parasol transparentny">
 				<hr>
-				<h5>Nazwa produktu</h5>
-				<p>cena</p>
+				<h5>Parasol transparentny</h5>
+				<p>75.99 zł</p>
 			</a>
 			<!------------------------------------------------------>
 
