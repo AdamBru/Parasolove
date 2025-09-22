@@ -56,10 +56,10 @@
 		<tbody>
 			<?php
 				$sort = $_GET['sort'] ?? 'default';
-				$data = getProducts($conn, $sort, false);
-				$products = $data['products'];
-				$currentPage = $data['pagination']['currentPage'];
-				$totalPages = $data['pagination']['totalPages'];
+				$getProducts = getProducts($conn, $sort, false);
+				$products = $getProducts['products'];
+				$currentPage = $getProducts['pagination']['currentPage'];
+				$totalPages = $getProducts['pagination']['totalPages'];
 
 				foreach ($products as $product) {
 					echo '<tr ' . ( ($product['p_is_archived'] == 1) ? 'style="background: #f8fe3875;"' : '' ) . '>
@@ -238,8 +238,8 @@
 									' . $_POST['new-product-category'] . ',
 									' . $_POST['new-product-color'] . ',
 									' . $_POST['new-product-size'] . ',
-									"' . $_POST['new-product-name'] . '",
-									"' . $_POST['new-product-description'] . '",
+									"' . htmlspecialchars($_POST['new-product-name']) . '",
+									"' . htmlspecialchars($_POST['new-product-description']) . '",
 									' . str_replace(',', '.', $_POST['new-product-price']) . ',
 									' . $_POST['new-product-quantity'] . '
 								);';

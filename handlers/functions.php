@@ -22,7 +22,7 @@
 	}
 	
 
-	function getProducts($conn, $sort = 'default', $pagination = false) {
+	function getProducts($conn, $sort = 'default', $pagination = false, $limitOne = false) {
 		$sortOptions = [
 			'default' => 'pro_product_id DESC',
 			'price-asc' => 'pro_price ASC',
@@ -50,7 +50,7 @@
 			$recordsPerPage = 18;
 			$numberOfRecords = 0;
 			$numberOfPages = 1;
-			$hideArchived = '';
+			$whereSql = '';
 			
 			if ($pagination) {
 				$numberOfRecords = mysqli_fetch_assoc( mysqli_query( $conn, 'SELECT COUNT(*) AS count FROM product WHERE is_archived = 0' ) )['count'];
@@ -64,7 +64,7 @@
 				$paginationSql = " LIMIT $paginationStart, $recordsPerPage";
 
 				// Ukrycie produktów archiwalnych
-				$hideArchived = "WHERE pro.is_archived = 0";
+				$whereSql = "WHERE pro.is_archived = 0";
 			}
 
 			// Informacje o stronie
@@ -76,6 +76,12 @@
 					echo "<p> Strona $pageNumber z $numberOfPages </p>";
 					echo "<p> Wyświetlanie wyników&nbsp; $startRecord - $endRecord &nbsp;z&nbsp; $numberOfRecords </p>";
 				echo '</div><hr>';
+			}
+
+			// Wybranie konkretnego produktu
+			if ($limitOne) {
+				$whereSql = 'WHERE pro.is_archived = 0 AND pro.product_id = ' . $_GET['id'];
+				
 			}
 
 		$sql = 'SELECT
@@ -96,17 +102,22 @@
 				JOIN category ON pro.category_Id = category.category_Id 
 				JOIN color ON pro.color_Id = color.color_Id
 				JOIN size ON pro.size_Id = size.size_Id ' . 
-				$hideArchived . ' 
+				$whereSql . ' 
 			    ORDER BY ' . $sort . $paginationSql;
+				// echo $sql;
 		
 		$result = mysqli_query($conn, $sql);
+
+		// TEMP: show number of returned rows
+		// echo '<h1>' . mysqli_num_rows($result) . '</h1>';
 
 		return [
 			'products' => mysqli_fetch_all($result, MYSQLI_ASSOC),
 			'pagination' => [
 				'currentPage' => $pageNumber,
 				'totalPages' => $numberOfPages
-			]
+			], 
+			'foundProducts' => mysqli_num_rows($result)
 		];
 
 		// Użycie

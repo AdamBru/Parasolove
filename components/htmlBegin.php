@@ -11,6 +11,9 @@
 		exit;
 	}
 
+	// Kodowanie znaków
+	mysqli_set_charset($conn, "utf8");
+
 	require_once('handlers/functions.php');
 ?>
 

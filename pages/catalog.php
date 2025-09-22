@@ -74,10 +74,10 @@
 		<div class="flex-container flex-1" style="gap: 1rem;">
 			<!-- Dynamicznie generowana lista produktów -->
 			<?php
-				$data = getProducts($conn, $sort, true);
-				$products = $data['products'];
-				$currentPage = $data['pagination']['currentPage'];
-				$totalPages = $data['pagination']['totalPages'];
+				$getProducts = getProducts($conn, $sort, true);
+				$products = $getProducts['products'];
+				$currentPage = $getProducts['pagination']['currentPage'];
+				$totalPages = $getProducts['pagination']['totalPages'];
 
 				foreach ($products as $product) {
 					echo '<a href="/produkt?id=' . $product['pro_product_id'] . '" class="product-card">

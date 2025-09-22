@@ -13,8 +13,9 @@
 		'/not-found' => 'pages/404.php',
 		'/wyloguj' => 'handlers/logout.php',
 		'/katalog' => 'pages/catalog.php',
+		'/produkt' => 'pages/product.php',
 		'/panel-sprzedawcy' => 'pages/managePanel.php',
-		'/temp' => 'pages/TEMP.php',
+		// '/temp' => 'pages/TEMP.php',
 	];
 
 
