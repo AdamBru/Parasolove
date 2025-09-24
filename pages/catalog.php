@@ -13,10 +13,24 @@
 		<aside class="filters" style="user-select: none;">
 
 			<div>
-				<p style="font-size: 1.2rem;">Sortowanie</p>
 				<form method="get" name="sort">
+					<p style="font-size: 1.2rem;">Sortowanie</p>
+					<?php 
+						foreach ($_GET as $key => $value) {
+							if ($key == 'sort' || $key == 'page') continue; 
+
+							if (is_array($value)) {
+								foreach ($value as $val) {
+									echo '<input type="hidden" name="' . htmlspecialchars($key) . '[]" value="' . htmlspecialchars($val) . '">';
+								}
+							} else {
+								echo '<input type="hidden" name="' . htmlspecialchars($key) . '" value="' . htmlspecialchars($value) . '">';
+							}
+						}
+
+						$sort = $_GET['sort'] ?? 'default'; 
+					?>
 					<select name="sort" id="sort" onchange="this.form.submit()">
-						<?php $sort = $_GET['sort'] ?? 'default'; ?>
 						<option value="default" <?= $sort == 'default' ? 'selected' : ''?>>Domyślne</option>
 						<option value="price-asc" <?= $sort == 'price-asc' ? 'selected' : ''?>>Cena rosnąco</option>
 						<option value="price-desc" <?= $sort == 'price-desc' ? 'selected' : ''?>>Cena malejąco</option>
@@ -102,15 +116,23 @@
 
 			<!-- Paginacja -->
 			<div class="flex-container align-center justify-center nowrap" id="pagination-container" style="gap: 1.75rem; margin-top: 2rem;">
-				<a href="<?= ($currentPage > 1) ? '?page=' . $currentPage - 1 : '' ?>">&lt;</a>
+				<?php
+					$getParams = $_GET;
+					unset($getParams['page']); 
+					$queryStringBase = http_build_query($getParams);
+					$queryStringBase = $queryStringBase ? $queryStringBase . '&' : '';
+				?>
+
+				<a href="<?= ($currentPage > 1) ? '?' . $queryStringBase . 'page=' . ($currentPage - 1) : '#' ?>">&lt;</a>
 
 				<!-- Numery stron -->
 				<?php for ($i = 1; $i <= $totalPages; $i++) { ?>
-					<a href="?page=<?= $i ?>" <?= ($i == $currentPage) ? 'class="pagination-active"' : '' ?>> <?= $i ?> </a>
+					<a href="?<?= $queryStringBase . 'page=' . $i ?>" <?= ($i == $currentPage) ? 'class="pagination-active"' : '' ?>> <?= $i ?> </a>
 				<?php } ?>
 
-				<a href="<?= ($currentPage < $totalPages) ? '?page=' . $currentPage + 1 : '' ?>">&gt;</a>
+				<a href="<?= ($currentPage < $totalPages) ? '?' . $queryStringBase . 'page=' . ($currentPage + 1) : '#' ?>">&gt;</a>
 			</div>
+
 
 	
 		</div>
@@ -119,6 +141,24 @@
 
 </div>
 
+<script>
+	// Dopisisywanie filtrów do GET zamiast nadpisywania
+	document.getElementById('filtr-form').addEventListener('submit', function(e) {
+		e.preventDefault(); 
+
+		const form = e.target;
+		const formData = new FormData(form);
+		const currentParams = new URLSearchParams(window.location.search);
+
+		for (const [key, value] of formData.entries()) {
+			if (value !== '') {
+				currentParams.append(key, value);
+			}
+		}
+
+		window.location.search = currentParams.toString();
+	});
+</script>
 
 
 <?php

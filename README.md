@@ -8,10 +8,6 @@
 		- formularz edytowania produktu
 	- zamówienia
 
-- funkcja dopisująca do adresu jeśli nie pusty zamiast nadpisywania (w szczególności dla paginacji i filtrów)
-
-- filtrowanie katalogu
-
 - koszyk
 
-- łaniejsze checkboxy w aside.filters
+- łaniejsze checkboxy w aside.filters (EASY)

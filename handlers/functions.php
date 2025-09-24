@@ -35,10 +35,28 @@
 		}
 	}
 
-	function addToUrl($string = '') {
-		$uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+	function filters($conn) {
+		$where = [];
 
-	}	
+		// Mapowanie kluczy GET na kolumny SQL i typy
+		$filters = [
+			'category'	=> fn($v) => $v !== 'wszystkie' ? "category.name = '" . mysqli_real_escape_string($conn, $v) . "'" : null,
+			'price-min'	=> fn($v) => is_numeric($v) ? "pro.price >= " . (int)$v : null,
+			'price-max'	=> fn($v) => is_numeric($v) ? "pro.price <= " . (int)$v : null,
+			'color'		=> fn($v) => is_array($v) ? "color.name IN (" . implode(',', array_map(fn($c) => "'" . mysqli_real_escape_string($conn, $c) . "'", $v)) . ")" : null,
+			'size'		=> fn($v) => is_array($v) ? "size.name IN (" . implode(',', array_map(fn($s) => "'" . mysqli_real_escape_string($conn, $s) . "'", $v)) . ")" : null,
+		];
+
+		foreach ($filters as $key => $builder) {
+			if (isset($_GET[$key]) && ($clause = $builder($_GET[$key]))) {
+				$where[] = $clause;
+			}
+		}
+
+		$whereSQL = $where ? ' ' . implode(' AND ', $where) : '';
+
+		return $whereSQL;
+	}
 
 	function getProducts($conn, $sort = 'default', $pagination = false, $limitOne = false) {
 		$sortOptions = [
@@ -70,8 +88,22 @@
 			$numberOfPages = 1;
 			$whereSql = '';
 			
+
 			if ($pagination) {
-				$numberOfRecords = mysqli_fetch_assoc( mysqli_query( $conn, 'SELECT COUNT(*) AS count FROM product WHERE is_archived = 0' ) )['count'];
+				$filterString = filters($conn);
+
+				$whereCount = "WHERE pro.is_archived = 0";
+				if ($filterString) {
+					$whereCount .= " AND" . $filterString;
+				}
+
+				$countSql = "SELECT COUNT(*) AS count FROM product pro
+							JOIN category ON pro.category_Id = category.category_Id
+							JOIN color ON pro.color_Id = color.color_Id
+							JOIN size ON pro.size_Id = size.size_Id
+							$whereCount";
+
+				$numberOfRecords = mysqli_fetch_assoc(mysqli_query($conn, $countSql))['count'];
 				$numberOfPages = ceil($numberOfRecords / $recordsPerPage);
 
 				if (isset($_GET['page']) && is_numeric($_GET['page'])) {
@@ -81,8 +113,7 @@
 				$paginationStart = ($pageNumber - 1) * $recordsPerPage;
 				$paginationSql = " LIMIT $paginationStart, $recordsPerPage";
 
-				// Ukrycie produktów archiwalnych
-				$whereSql = "WHERE pro.is_archived = 0";
+				$whereSql = $whereCount;
 			}
 
 			// Informacje o stronie
@@ -91,8 +122,8 @@
 				$endRecord = min($paginationStart + $recordsPerPage, $numberOfRecords);
 
 				echo '<div class="flex-container align-center flex-row nowrap gap-m mobile-page-info" style="justify-content: space-between">';
-					echo "<p> Strona $pageNumber z $numberOfPages </p>";
-					echo "<p> Wyświetlanie wyników&nbsp; $startRecord - $endRecord &nbsp;z&nbsp; $numberOfRecords </p>";
+				echo "<p> Strona $pageNumber z $numberOfPages </p>";
+				echo "<p> Wyświetlanie wyników&nbsp; $startRecord - $endRecord &nbsp;z&nbsp; $numberOfRecords </p>";
 				echo '</div><hr>';
 			}
 
@@ -120,10 +151,15 @@
 				JOIN color ON pro.color_Id = color.color_Id
 				JOIN size ON pro.size_Id = size.size_Id ' . 
 				$whereSql . ' 
-			    ORDER BY ' . $sort . $paginationSql;
+				ORDER BY ' . $sort . $paginationSql;
 				// echo $sql;
 		
 		$result = mysqli_query($conn, $sql);
+
+		// Treść błędu zwrócona przez SQL
+		if (!$result) {
+			die("Błąd zapytania: " . mysqli_error($conn));
+		}
 
 		// TEMP: show number of returned rows
 		// echo '<h1>' . mysqli_num_rows($result) . '</h1>';
