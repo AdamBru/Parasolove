@@ -62,10 +62,10 @@
 				$totalPages = $getProducts['pagination']['totalPages'];
 
 				foreach ($products as $product) {
-					echo '<tr ' . ( ($product['p_is_archived'] == 1) ? 'style="background: #f8fe3875;"' : '' ) . '>
+					echo '<tr ' . ( ($product['pro_is_archived'] == 1) ? 'style="background: #f8fe3875;"' : '' ) . '>
 							<td>' . $product['pro_product_id'] . '</td>
-							<td class="td-img">' . getProductImage($product['pro_product_id'], 0) . '</td>
-							<td>' . textTooLong($product['pro_name'], 45) . '</td>
+							<td class="td-img">' . getProductImage($product['pro_product_id'], 0, $product['pro_color_id']) . '</td>
+							<td><a href="/produkt?id=' . $product['pro_product_id'] . '">' . textTooLong($product['pro_name'], 45) . '</a></td>
 							<td>' . $product['cat_name'] . '</td>
 							<td class="td-color"> <label class="color-checkbox-label" style="background: ' . $product['col_hex_code'] . '; cursor: auto;"></label> </td>
 							<td>' . $product['siz_name'] . '</td>

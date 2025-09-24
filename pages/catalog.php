@@ -2,11 +2,14 @@
 	$title = " - katalog";
 	require_once('components/htmlBegin.php');
 	require_once('components/header.php');
+
+	// Zawołanie breadcrumba
+	require_once('components/breadcrumb.php');
 ?>
 
 <div class="page-container">
 
-	<div class="flex-container">
+	<div class="flex-container mobile-aside-catalog-gap">
 		<aside class="filters" style="user-select: none;">
 
 			<div>
@@ -32,15 +35,17 @@
 						$sql = "SELECT name FROM `category`";
 						$result = mysqli_query($conn, $sql);
 						while($row = mysqli_fetch_array($result)) {
-							echo '<div> <input type="radio" name="category" id="' . $row["name"] . '" value="' . $row["name"] . '"> <label for="' . $row["name"] . '">' . $row["name"] . '</label> </div>';
+							echo '<div> <input type="radio" name="category" id="' . $row["name"] . '" value="' . $row["name"] . '" ' .
+								((isset($_GET['category']) && $row["name"] == $_GET['category']) ? "checked" : "")
+							. '> <label for="' . $row["name"] . '">' . $row["name"] . '</label> </div>';
 						}
 					?>
 
 				<!-- Cena -->
 				<div class="flex-container align-center row nowrap" style="gap: .5rem"> <span style="width: fit-content;"> Cena </span> <hr> </div>
 					<div class="cena-input">
-						<input type="number" name="price-min" id="price-min" value="" style="margin-left: 0;"> <label for="price-min" style="min-width: fit-content;">zł &nbsp;&mdash;</label>
-						<input type="number" name="price-max" id="price-max" value=""></label> <label for="price-max">zł</label>
+						<input type="number" name="price-min" id="price-min" value="<?= ( isset($_GET['price-min']) && is_numeric($_GET['price-min']) && ($_GET['price-min']) != '' ) ? $_GET['price-min'] : '0' ?>" style="margin-left: 0;"> <label for="price-min" style="min-width: fit-content;">zł &nbsp;&mdash;</label>
+						<input type="number" name="price-max" id="price-max" value="<?= ( isset($_GET['price-max']) && is_numeric($_GET['price-max']) && ($_GET['price-max']) != '' ) ? $_GET['price-max'] : ceil(mysqli_fetch_array(mysqli_query($conn, 'SELECT MAX(price) FROM product;'))[0]) ?>"> <label for="price-max">zł</label>
 					</div>
 
 				<!-- Kolor -->
@@ -50,7 +55,9 @@
 							$sql = "SELECT name, hex_code FROM `color`";
 							$result = mysqli_query($conn, $sql);
 							while($row = mysqli_fetch_array($result)) {
-								echo '<label title="' . $row["name"] . '" value="' . $row["name"] . '" for="' . $row["name"] . '" class="color-checkbox-label" style="background: ' . $row["hex_code"] . '"></label> <input type="checkbox" name="color" id="' . $row["name"] . '" class="color-checkbox">';
+								$checked = (isset($_GET['color']) && is_array($_GET['color']) && in_array($row['name'], $_GET['color'])) ? 'checked' : '';
+								echo '<label title="' . $row["name"] . '" for="' . $row["name"] . '" class="color-checkbox-label" style="background: ' . $row["hex_code"] . '"></label> 
+									  <input type="checkbox" name="color[]" value="' . $row["name"] . '" id="' . $row["name"] . '" class="color-checkbox"' . $checked . '>';
 							}
 						?>
 					</div>
@@ -61,7 +68,11 @@
 						$sql = "SELECT name FROM `size`";
 						$result = mysqli_query($conn, $sql);
 						while($row = mysqli_fetch_array($result)) {
-							echo '<div> <input type="checkbox" name="size" value="' . $row["name"] . '" id="' . $row["name"] . '"> <label for="' . $row["name"] . '">' . $row["name"] . '</label> </div>';
+							$checked = (isset($_GET['size']) && is_array($_GET['size']) && in_array($row['name'], $_GET['size'])) ? 'checked' : '';
+							echo '<div> 
+									<input type="checkbox" name="size[]" value="' . $row["name"] . '" id="' . $row["name"] . '"' . $checked . '> 
+									<label for="' . $row["name"] . '">' . $row["name"] . '</label> 
+								</div>';
 						}
 					?>
 				
@@ -71,17 +82,17 @@
 		</aside>	
 	
 		
-		<div class="flex-container flex-1" style="gap: 1rem;">
+		<div class="flex-container flex-1 mobile-catalog" style="gap: 1rem;">
 			<!-- Dynamicznie generowana lista produktów -->
 			<?php
-				$getProducts = getProducts($conn, $sort, true);
+				$getProducts = getProducts($conn, $sort, true, false);
 				$products = $getProducts['products'];
 				$currentPage = $getProducts['pagination']['currentPage'];
 				$totalPages = $getProducts['pagination']['totalPages'];
 
 				foreach ($products as $product) {
 					echo '<a href="/produkt?id=' . $product['pro_product_id'] . '" class="product-card">
-							'. getProductImage($product['pro_product_id']) .'
+							'. getProductImage($product['pro_product_id'], 0, $product['pro_color_id']) .'
 							<hr>
 							<h4>' . $product['pro_name'] . '</h4>
 							<p>' . $product['pro_price'] . ' zł</p>
@@ -90,7 +101,7 @@
 			?>
 
 			<!-- Paginacja -->
-			<div class="flex-container align-center justify-center nowrap" style="gap: 1.75rem; margin-top: 2rem;">
+			<div class="flex-container align-center justify-center nowrap" id="pagination-container" style="gap: 1.75rem; margin-top: 2rem;">
 				<a href="<?= ($currentPage > 1) ? '?page=' . $currentPage - 1 : '' ?>">&lt;</a>
 
 				<!-- Numery stron -->

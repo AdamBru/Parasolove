@@ -7,7 +7,7 @@
 	}
 
 					// ID produktu, indeks zdjęcia
-	function getProductImage($id, $index = 0) {
+	function getProductImage($id, $index = 0, $colorId = null) {
 		$imageName = $id . '-' . $index . '.webp';
 		$filePath = 'assets/product/' . $imageName;
 
@@ -15,12 +15,30 @@
 
 		// If no-image then add padding
 		if ($src == 'assets/site-images/no-image.svg') {
-			return '<img src="' . $src . '" style="padding: 5em;" loading="lazy">';
+			// return '<img src="' . $src . '" style="padding: 5em;" loading="lazy">';
+			return getImageByColor($colorId);
 		} else {
-			return '<img src="' . $src . '" loading="lazy">';
+			return '<img src="' . $src . '" loading="lazy" style="object-fit: contain;">';
 		}
 	}
-	
+
+	function getImageByColor($colorId) {
+		$filePath = 'assets/product/color/' . $colorId . '.webp';
+
+		$src = file_exists($filePath) ? $filePath : 'assets/site-images/no-image.svg';
+
+		// If no-image then add padding
+		if ($src == 'assets/site-images/no-image.svg') {
+			return '<img src="' . $src . '" style="padding: 5em;" loading="lazy">';
+		} else {
+			return '<img src="' . $src . '" loading="lazy" style="object-fit: contain;">';
+		}
+	}
+
+	function addToUrl($string = '') {
+		$uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+
+	}	
 
 	function getProducts($conn, $sort = 'default', $pagination = false, $limitOne = false) {
 		$sortOptions = [
@@ -72,7 +90,7 @@
 				$startRecord = $paginationStart + 1;
 				$endRecord = min($paginationStart + $recordsPerPage, $numberOfRecords);
 
-				echo '<div class="flex-container align-center flex-row nowrap gap-m" style="justify-content: space-between">';
+				echo '<div class="flex-container align-center flex-row nowrap gap-m mobile-page-info" style="justify-content: space-between">';
 					echo "<p> Strona $pageNumber z $numberOfPages </p>";
 					echo "<p> Wyświetlanie wyników&nbsp; $startRecord - $endRecord &nbsp;z&nbsp; $numberOfRecords </p>";
 				echo '</div><hr>';
@@ -81,7 +99,6 @@
 			// Wybranie konkretnego produktu
 			if ($limitOne) {
 				$whereSql = 'WHERE pro.is_archived = 0 AND pro.product_id = ' . $_GET['id'];
-				
 			}
 
 		$sql = 'SELECT
@@ -93,7 +110,7 @@
 					pro.description 	AS pro_description,
 					pro.price 			AS pro_price,
 					pro.quantity 		AS pro_quantity,
-					pro.is_archived 	AS p_is_archived,
+					pro.is_archived 	AS pro_is_archived,
 					category.name 		AS cat_name,
 					color.name 			AS col_name,
 					color.hex_code		AS col_hex_code,
