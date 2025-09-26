@@ -80,6 +80,41 @@ h2 {
 	pointer-events: none;
 }
 
+.styled-radio,
+.styled-checkbox {
+	label {
+		position: relative;
+		padding-left: 1.25rem;
+
+		&::before {
+			content: '';
+			position: absolute;
+			top: .3rem;
+			left: 0;
+			width: .5rem;
+			height: .5rem;
+			outline: 1px solid #777;
+			outline-offset: 2px;
+			transition: all .1s ease-in-out;
+		}
+	}
+
+	input[type="radio"],
+	input[type="checkbox"] {
+		display: none;
+
+		&:checked + label::before {
+			background-color: #333;
+			outline-color: #333;
+		}
+	}
+
+	&:hover label::before {
+		background: #ccc;
+	}
+}
+	.styled-radio label::before {border-radius: 50%;}
+
 @keyframes fadeOut {
 	0% {opacity: 100%;}
 	50% {opacity: 100%;}

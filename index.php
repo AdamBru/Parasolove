@@ -15,6 +15,7 @@
 		'/katalog' => 'pages/catalog.php',
 		'/produkt' => 'pages/product.php',
 		'/panel-sprzedawcy' => 'pages/managePanel.php',
+		'/koszyk' => 'pages/cart.php',
 		// '/temp' => 'pages/TEMP.php',
 	];
 

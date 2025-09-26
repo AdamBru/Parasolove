@@ -44,12 +44,12 @@
 				
 				<!-- Rodzaj -->
 				<div class="flex-container align-center row nowrap" style="gap: .5rem"> <span style="width: fit-content;"> Rodzaj </span> <hr> </div>
-					<div><input type="radio" name="category" id="wszystkie" value="wszystkie" checked> <label for="wszystkie">wszystkie</label> </div>
+					<div class="styled-radio"><input type="radio" name="category" id="wszystkie" value="wszystkie" checked> <label for="wszystkie">wszystkie</label> </div>
 					<?php
 						$sql = "SELECT name FROM `category`";
 						$result = mysqli_query($conn, $sql);
 						while($row = mysqli_fetch_array($result)) {
-							echo '<div> <input type="radio" name="category" id="' . $row["name"] . '" value="' . $row["name"] . '" ' .
+							echo '<div class="styled-radio"> <input type="radio" name="category" id="' . $row["name"] . '" value="' . $row["name"] . '" ' .
 								((isset($_GET['category']) && $row["name"] == $_GET['category']) ? "checked" : "")
 							. '> <label for="' . $row["name"] . '">' . $row["name"] . '</label> </div>';
 						}
@@ -83,7 +83,7 @@
 						$result = mysqli_query($conn, $sql);
 						while($row = mysqli_fetch_array($result)) {
 							$checked = (isset($_GET['size']) && is_array($_GET['size']) && in_array($row['name'], $_GET['size'])) ? 'checked' : '';
-							echo '<div> 
+							echo '<div class="styled-checkbox"> 
 									<input type="checkbox" name="size[]" value="' . $row["name"] . '" id="' . $row["name"] . '"' . $checked . '> 
 									<label for="' . $row["name"] . '">' . $row["name"] . '</label> 
 								</div>';

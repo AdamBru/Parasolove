@@ -1,0 +1,76 @@
+aside.cart-info {
+	border: none;
+	border-left: 1px solid #ccc;
+	padding: 0 1rem;
+	width: 220px;
+
+}
+
+.cart-header {
+	border-bottom: 1px solid #ccc;
+	height: fit-content;
+	width: 100%;
+	white-space: nowrap;
+	padding: 0 .2rem;
+	display: flex;
+	flex-direction: row;
+	gap: 1rem;
+	
+	h3 {
+		position: relative;
+		padding-left: 1.5rem;
+
+		&::before {
+			content: '';
+			position: absolute;
+			top: .5rem;
+			left: 0;
+			width: .6rem;
+			height: .6rem;
+			border: .2rem solid transparent;
+			border-left: .2rem solid #333;
+			border-bottom: .2rem solid #333;
+			transform: rotate(-45deg);
+			transition: all .1s ease-in-out;
+		}
+	}
+
+	input[type="radio"] {
+		display: none;
+	}
+}
+
+.styled-radio,
+.styled-checkbox {
+	label {
+		position: relative;
+		padding-left: 1.25rem;
+
+		&::before {
+			content: '';
+			position: absolute;
+			top: .3rem;
+			left: 0;
+			width: .5rem;
+			height: .5rem;
+			outline: 1px solid #777;
+			outline-offset: 2px;
+			transition: all .1s ease-in-out;
+		}
+	}
+
+	input[type="radio"],
+	input[type="checkbox"] {
+		display: none;
+
+		&:checked + label::before {
+			background-color: #333;
+			outline-color: #333;
+		}
+	}
+
+	&:hover label::before {
+		background: #ccc;
+	}
+}
+	.styled-radio label::before {border-radius: 50%;}

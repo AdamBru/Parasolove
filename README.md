@@ -8,6 +8,4 @@
 		- formularz edytowania produktu
 	- zamówienia
 
-- koszyk
-
-- łaniejsze checkboxy w aside.filters (EASY)
+- koszyk (IN PROGRESS)
