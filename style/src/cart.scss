@@ -16,22 +16,25 @@ aside.cart-info {
 	flex-direction: row;
 	gap: 1rem;
 	
+	&:has(input[type="radio"]:checked) h3::before {
+		transform: rotate(135deg);
+	}
+
 	h3 {
 		position: relative;
 		padding-left: 1.5rem;
 
-		&::before {
+		&::before { // szczałka
 			content: '';
 			position: absolute;
 			top: .5rem;
 			left: 0;
-			width: .6rem;
-			height: .6rem;
-			border: .2rem solid transparent;
-			border-left: .2rem solid #333;
-			border-bottom: .2rem solid #333;
+			width: .5rem;
+			height: .5rem;
+			border: #333 solid;
+			border-width: 0 0 2px 2px;
 			transform: rotate(-45deg);
-			transition: all .1s ease-in-out;
+			transition: all .2s ease-in-out;
 		}
 	}
 
@@ -39,38 +42,3 @@ aside.cart-info {
 		display: none;
 	}
 }
-
-.styled-radio,
-.styled-checkbox {
-	label {
-		position: relative;
-		padding-left: 1.25rem;
-
-		&::before {
-			content: '';
-			position: absolute;
-			top: .3rem;
-			left: 0;
-			width: .5rem;
-			height: .5rem;
-			outline: 1px solid #777;
-			outline-offset: 2px;
-			transition: all .1s ease-in-out;
-		}
-	}
-
-	input[type="radio"],
-	input[type="checkbox"] {
-		display: none;
-
-		&:checked + label::before {
-			background-color: #333;
-			outline-color: #333;
-		}
-	}
-
-	&:hover label::before {
-		background: #ccc;
-	}
-}
-	.styled-radio label::before {border-radius: 50%;}
