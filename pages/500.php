@@ -23,7 +23,7 @@
 
 	<div class="page-container align-center justify-center" style="gap: 1rem;">
 		<img src="assets/site-images/technical-difficulties.gif" alt="Technical-difficulties">
-		<p>Obecnie doświadczamy problemów technicznych.</p>
+		<p style="text-align: center;">Obecnie doświadczamy problemów technicznych.</p>
 		<p>Spróbuj ponownie za chwilę.</p>
 	</div>
 

@@ -179,3 +179,5 @@
 	}
 
 ?>
+
+<script src="handlers/cartHandler.js"></script>

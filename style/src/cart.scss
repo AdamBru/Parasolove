@@ -2,8 +2,20 @@ aside.cart-info {
 	border: none;
 	border-left: 1px solid #ccc;
 	padding: 0 1rem;
-	width: 220px;
+	width: auto;
 
+	.row {
+		display: flex;
+		flex-direction: row;
+		flex-wrap: nowrap;
+		align-items: center;
+		justify-content: space-between;
+		gap: 1rem;
+
+		font-size: .9rem;
+		white-space: nowrap;
+		margin: .25rem 0;
+	}
 }
 
 .cart-header {
@@ -41,4 +53,110 @@ aside.cart-info {
 	input[type="radio"] {
 		display: none;
 	}
+}
+
+.cart-option-container {
+	display: flex;
+	flex-direction: column;
+	flex-wrap: nowrap;
+	overflow: hidden;
+	height: 0;
+	transition: all .3s ease-in-out;
+
+	.cart-product {
+		display: flex;
+		flex-direction: row;
+		flex-wrap: nowrap;
+		gap: 1.5rem;
+		max-height: 8rem;
+		margin: 0 1rem;
+		padding: 1rem .5rem;
+		border-bottom: 1px solid #ccc;
+
+		&:last-of-type {
+			border: none;
+		}
+		
+		img {
+			height: 100%;
+			max-height: 7rem;
+			aspect-ratio: 1/1;
+		}
+
+		a {
+			font-size: 1.15rem;
+			width: fit-content;
+		}
+		span.details {
+			font-size: .9rem;
+			font-weight: 300;
+		}
+	}
+}
+
+.deliverer {
+	font-size: 1.1rem;
+	width: 12rem;
+	user-select: none;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	input[type="radio"] {display: none;}
+	
+	&:has(input[type="radio"]:checked) {
+		border: 1px solid #333;
+	}
+
+	img {
+		height: 3rem;
+		object-fit: cover;
+	}
+
+	span {
+		white-space: nowrap;
+		font-size: .8rem;
+	}
+}
+
+.deliverer-details {
+	display: flex;
+	flex-direction: column;
+	flex-wrap: nowrap;
+	max-width: 300px;
+
+	label {
+		margin-top: .5rem;
+		font-size: .9rem;
+		cursor: auto;
+	}
+
+	input {
+		font-size: .9rem;
+		padding: .2rem .3rem;
+		width: 100%;
+	}
+}
+
+#loading {
+	display: none;
+	position: fixed;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	background: url('/assets/site-images/loading.gif') rgba($color: #333, $alpha: .4);
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: 3rem;
+	z-index: 5;
+
+	&.active {
+		display: block;
+	}
+}
+
+html:has(#loading.active) {
+	overflow-y: hidden !important;
 }

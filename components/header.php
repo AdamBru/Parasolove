@@ -21,7 +21,8 @@
 			</div>
 		<?php } ?>
 
-		<a href="/koszyk" class="shopping-bag-icon"><img src="assets/site-images/shopping-bag.svg" alt="Koszyk" class="icon"></a>
+		<a href="/koszyk" class="shopping-bag-icon" id="cart-count"><img src="assets/site-images/shopping-bag.svg" alt="Koszyk" class="icon"></a>
+		<script>updateCartCount();</script>
 	</div>
 </header>
 

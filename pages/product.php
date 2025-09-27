@@ -39,7 +39,7 @@
 				</tr>
 				<tr>
 					<th>Kolor:</th>
-					<td class="flex-container align-center flex-row nowrap gap-m"> 
+					<td class="flex-container align-center flex-row nowrap gap-m" style="justify-content: space-between;"> 
 						<?= $product['col_name'] ?> 
 						<label class="color-checkbox-label" style="background: <?= $product['col_hex_code'] ?> ;"></label> 
 					</td>
@@ -47,10 +47,20 @@
 			</table>
 
 			<div class="flex-container  flex-row nowrap gap-s">
-				<input type="number" name="add-to-card-mount" id="add-to-card-mount" class="add-to-cart-input" value="1">
-				<button class="btn add-to-cart-button" style="white-space: nowrap">Dodaj do koszyka</button>
+				<input type="number" name="add-to-card-mount" id="add-to-card-mount" class="add-to-cart-input" min="1" value="1">
+				<button class="btn add-to-cart-button" style="white-space: nowrap" onclick="addToCartWithInput(<?= $product['pro_product_id'] ?>)">Dodaj do koszyka</button>
 			</div>
 		</div>
+
+		<!-- Popup: Produkt dodany do koszyka -->
+		 <div class="infoPopup flex align-center justify-center flex-column wrap gap-m" id="addedItemBox" style="display: none;">
+			<p>Produkt został dodany do koszyka.</p>
+			<div class="flex flex row no-wrap gap-m">
+				<a href="/koszyk" class="link">Przejdź do koszyka</a>
+				<input type="submit" id="dismissPopup" class="btn flex-0" value="OK" onclick="dismissAddedItemBox()" style="padding: .1rem .6rem;">
+			</div>
+		</div>
+
 
 		<div class="flex-container">
 			<p class="recommended" style="font-size: 1.5rem;">Polecane w kategorii parasole <?= $product['cat_name'] ?></p>

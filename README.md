@@ -1,11 +1,5 @@
-## TODO:
-- panel sprzedawcy
-	- kody rabatowe
-		- formularz dodawania kuponu
-		- formularz edytowania kuponu
-	- inwentarz
-		- formularz dodawania produktu (HIGHEST PRIORITY)
-		- formularz edytowania produktu
-	- zamówienia
+# Parasolove
+Projekt Parasolove to witryna sklepu, którą pisałem w celu ćwiczenia umiejętności PHP. <br>
+Nie chce mi się pisać tego readme, pozdro.
 
-- koszyk (IN PROGRESS)
+AdamBru &copy; 2025
