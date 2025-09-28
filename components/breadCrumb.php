@@ -19,7 +19,7 @@
 				break;
 
 			case '/produkt':
-				$product = getProducts($conn, 'default', false, true)['products'][0];
+				$product = getProducts($conn, 'default', false, true, $_GET['id'])['products'][0];
 				 echo '<span>/</span>';
 				echo '<a href="/katalog" class="link-alt"> katalog </a>';
 				 echo '<span>/</span>';

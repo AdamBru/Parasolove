@@ -160,3 +160,6 @@ aside.cart-info {
 html:has(#loading.active) {
 	overflow-y: hidden !important;
 }
+
+.afterZl::after {content: ' zł';}
+.beforeMinus::before {content: '- '; font-weight: 600;}

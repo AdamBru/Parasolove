@@ -6,6 +6,15 @@
 		return $text;
 	}
 
+	function lcfirstUtf8($str) {
+		if (mb_check_encoding($str, 'UTF-8')) {
+			$first = mb_substr(mb_strtolower($str, 'UTF-8'), 0, 1, 'UTF-8');
+			return $first . mb_substr(mb_strtolower($str, 'UTF-8'), 1, mb_strlen($str), 'UTF-8');
+		} else {
+			return $str;
+		}
+	}
+
 					// ID produktu, indeks zdjęcia
 	function getProductImage($id, $index = 0, $colorId = null) {
 		$imageName = $id . '-' . $index . '.webp';
@@ -58,7 +67,7 @@
 		return $whereSQL;
 	}
 
-	function getProducts($conn, $sort = 'default', $pagination = false, $limitOne = false) {
+	function getProducts($conn, $sort = 'default', $pagination = false, $limitOne = false, $productId = 0) {
 		$sortOptions = [
 			'default' => 'pro_product_id DESC',
 			'price-asc' => 'pro_price ASC',
@@ -129,7 +138,7 @@
 
 			// Wybranie konkretnego produktu
 			if ($limitOne) {
-				$whereSql = 'WHERE pro.is_archived = 0 AND pro.product_id = ' . $_GET['id'];
+				$whereSql = 'WHERE pro.is_archived = 0 AND pro.product_id = ' . $productId;
 			}
 
 		$sql = 'SELECT

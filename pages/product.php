@@ -13,7 +13,7 @@
 	<div class="flex-container">
 
 		<?php
-			$getProducts = getProducts($conn, 'default', false, true);
+			$getProducts = getProducts($conn, 'default', false, true, $_GET['id']);
 			$product = $getProducts['products'][0];
 			// echo '<pre>'; print_r($product); echo '<pre>';
 

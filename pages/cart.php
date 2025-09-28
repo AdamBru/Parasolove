@@ -16,67 +16,77 @@
 			<h3>Produkty</h3>
 		</label>
 			<div class="cart-option-container" id="cart-option-products">
-				<div class="cart-product">
-					<img src="https://placehold.co/400">
-					
-					<div class="flex-container flex-column nowrap gap-xs">
-						<a href="" class="link-alt">Produkt testowy</a>
-						<span class="details">czarny, mały</span>
-					</div>
+			<?php
+				// Usuwanie produktu 
+				if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['remove_id'])) {
+					$removeId = $_POST['remove_id'];
 
-					<div class="mobile-price flex-container flex-column nowrap" style="justify-content: space-between; gap: .75rem; width: fit-content; height: 100%; white-space: nowrap;">
-						<span style="font-size: 1.15rem">39.99 zł</span>
-						<div class="flex-container flex-column nowrap" style="justify-content: space-between; gap: .75rem; width: 100%;">
-							<div class="flex-container flex-row nowrap gap-xs">
-								<input type="number" id="" value="1" style="width: 2.5rem; height: 1.5rem; text-align: center; font-size: .85rem;">
-								<label for=""> szt.</label>
-							</div>
-							<button class="remove-icon link-alt"></button>
-						</div>
-					</div>
-				</div>
-				
-				<div class="cart-product">
-					<img src="https://placehold.co/400">
-					
-					<div class="flex-container flex-column nowrap gap-xs">
-						<a href="" class="link-alt">Produkt testowy</a>
-						<span class="details">czarny, mały</span>
-					</div>
+					if (isset($_COOKIE['cart'])) {
+						$cart = json_decode($_COOKIE['cart'], true);
 
-					<div class="mobile-price flex-container flex-column nowrap" style="justify-content: space-between; gap: .75rem; width: fit-content; height: 100%; white-space: nowrap;">
-						<span style="font-size: 1.15rem">39.99 zł</span>
-						<div class="flex-container flex-column nowrap" style="justify-content: space-between; gap: .75rem; width: 100%;">
-							<div class="flex-container flex-row nowrap gap-xs">
-								<input type="number" id="" value="1" style="width: 2.5rem; height: 1.5rem; text-align: center; font-size: .85rem;">
-								<label for=""> szt.</label>
-							</div>
-							<button class="remove-icon link-alt"></button>
-						</div>
-					</div>
-				</div>
-				
-				<div class="cart-product">
-					<img src="https://placehold.co/400">
-					
-					<div class="flex-container flex-column nowrap gap-xs">
-						<a href="" class="link-alt">Produkt testowy</a>
-						<span class="details">czarny, mały</span>
-					</div>
+						if (is_array($cart)) {
+							$cart = array_filter($cart, function ($item) use ($removeId) {
+								return $item['id'] != $removeId;
+							});
 
-					<div class="mobile-price flex-container flex-column nowrap" style="justify-content: space-between; gap: .75rem; width: fit-content; height: 100%; white-space: nowrap;">
-						<span style="font-size: 1.15rem">39.99 zł</span>
-						<div class="flex-container flex-column nowrap" style="justify-content: space-between; gap: .75rem; width: 100%;">
-							<div class="flex-container flex-row nowrap gap-xs">
-								<input type="number" id="" value="1" style="width: 2.5rem; height: 1.5rem; text-align: center; font-size: .85rem;">
-								<label for=""> szt.</label>
-							</div>
-							<button class="remove-icon link-alt"></button>
-						</div>
-					</div>
-				</div>
+							setcookie('cart', json_encode(array_values($cart)), time() + 3600 * 24 * 365, "/");
+							header("Location: " . $_SERVER['REQUEST_URI']);
+							exit;
+						}
+					}
+				}
 
-				<button class="btn" style="margin: 0 auto; padding: .4rem .85rem; width: fit-content;" onclick="document.getElementById('delivery').click()">Wbierz opcję dostawy</button>
+				// Wyświetlanie produktów w koszyku
+				$total = 0.00;
+				if (isset($_COOKIE['cart'])) {
+					$cart = json_decode($_COOKIE['cart'], true);
+					if (is_array($cart)) {
+						if (empty($cart)) {
+							echo '<div class="cart-product" style="margin-bottom: 1rem;"> Twój koszyk jest pusty. </div>';
+						} else {
+							foreach ($cart as $item) {
+								$getProducts = getProducts($conn, 'default', false, true, $item['id']);
+								$product = $getProducts['products'][0];
+								$total += $product['pro_price'];
+								?>
+
+								<div class="cart-product">
+									<?= getProductImage($product['pro_product_id'], 0, $product['pro_color_id']) ?>
+									
+									<div class="flex-container flex-column nowrap gap-xs">
+										<a href="/produkt?id=<?= $product['pro_product_id'] ?>" class="link-alt"><?= $product['pro_name'] ?></a>
+										<span class="details"><?= lcfirstUtf8($product['col_name']) ?>, <?= lcfirstUtf8($product['siz_name']) ?></span>
+									</div>
+
+									<div class="mobile-price flex-container flex-column nowrap" style="justify-content: space-between; gap: .75rem; width: fit-content; height: 100%; white-space: nowrap;">
+										<span style="font-size: 1.15rem"><?= $product['pro_price'] ?> zł</span>
+										<div class="flex-container flex-column nowrap" style="justify-content: space-between; gap: .75rem; width: 100%;">
+											<div class="flex-container flex-row nowrap gap-xs">
+												<input type="number" id="" value="<?= $item['quantity'] ?>" style="width: 2.5rem; height: 1.5rem; text-align: center; font-size: .85rem;">
+												<label for=""> szt.</label>
+											</div>
+											<form method="post" style="display: inline;">
+												<input type="hidden" name="remove_id" value="<?= htmlspecialchars($item['id']) ?>">
+												<button type="submit" class="remove-icon link-alt"></button>
+											</form>
+										</div>
+									</div>
+								</div>
+
+								
+								<?php } ?>
+							
+							<button class="btn" style="margin: 0 auto; padding: .4rem .85rem; width: fit-content;" onclick="document.getElementById('delivery').click()">Wbierz opcję dostawy</button>
+							<?php
+						}
+					} else {
+						echo "Nieprawidłowy format koszyka.";
+					}
+				} else {
+					echo '<div class="cart-product" style="margin-bottom: 1rem;"> Twój koszyk jest pusty. </div>';
+				}
+			?>
+
 			</div>
 
 
@@ -161,12 +171,12 @@
 
 				</div>
 
-				<form method="post" id="orderRedirect"></form>
+				<form method="post"> <input type="submit" id="orderRedirect" name="orderRedirect" style="display: none;"> </form>
 				<button class="btn" style="margin: 1.5rem auto 0; padding: .4rem 2.5rem; width: fit-content;" onclick="order()">Zapłać</button> 
 				<?php
-					if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+					if (isset($_POST['orderRedirect'])) {
 						$_SESSION['order'] = 'success';
-						echo '<script>window.locatioben.href = "zamowienie";</script>';
+						echo '<script>window.location.href = "zamowienie";</script>';
 					}
 				?>
 			</div>
@@ -180,25 +190,55 @@
 
 		<div class="row">
 			<span>Wartość produktów</span>
-			<b>119.97 zł</b>
+			<b id="cenaProdukty"><?= ($total > 0) ? $total : '0.00' ?> zł</b>
+			<?php if ($total == 0.00) {unset($_SESSION['discount']); unset($_SESSION['submitted_code']);} ?>
 		</div>
 
 		<div class="row">
-			<span>Dostawa od</span>
-			<b>10.99 zł</b>
+			<span id="dostawaOd">Dostawa od</span>
+			<b id="dostawaCenaWybrana" class="afterZl">10.99</b>
 		</div>
+		
+		<?= (isset($_SESSION['discount'])) ?
+			'<div class="row">
+				<span>Rabat</span>
+				<b id="rabat" class="afterZl beforeMinus">' . number_format(round($total * ((float)$_SESSION['discount'] / 100), 2), 2, '.', ' ') . '</b>
+			</div>'
+			: ''
+		?>
 
 		<form method="post" style="gap: .25rem; margin-top: .25rem;">
 			<span style="font-size: .9rem">Kod rabatowy</span>
 			<div style="position: relative;">
-				<input type="text" name="" style="padding: .25rem .5rem; font-size: .9rem">
-				<input type="submit" class="arrow-right-icon" value="" style="opacity: .75;">
+				<input type="text" name="code" id="code" style="padding: .25rem .5rem; font-size: .9rem" value="<?= isset($_SESSION['submitted_code']) ? $_SESSION['submitted_code'] : '' ?>">
+				<input type="submit" name="applyCode" class="arrow-right-icon" value="" style="opacity: .75;">
 			</div>
 		</form>
 
+			<?php
+				if (isset($_POST['applyCode'])) {
+					$code = mysqli_real_escape_string($conn, $_POST['code']);
+					$_SESSION['submitted_code'] = $code;
+					$sql = "SELECT * FROM `cupon` WHERE `code` = '$code' LIMIT 1;";
+					$result = mysqli_query($conn, $sql);
+
+					if ($result && mysqli_num_rows($result) > 0) {
+						$row = mysqli_fetch_assoc($result);
+						$_SESSION['discount'] = $row['discount'];
+					} else {
+						echo '<span style="font-weight: 300;">Niepoprawny kod.</span>';
+						unset($_SESSION['discount']);
+						unset($_SESSION['submitted_code']);
+					}
+
+					echo '<script>window.location.href = "' . $_SERVER['REQUEST_URI'] . '";</script>';
+					exit;
+				}
+			?>
+
 		<div class="row" style="margin-top: 1rem; font-size: 1rem">
 			<span>Suma</span>
-			<b>150,94 zł</b>
+			<b id="cenaTotal" class="afterZl">0.00</b>
 		</div>
 
 	</aside>
@@ -252,26 +292,50 @@
 </script>
 
 <script>
+	displayTotal();
+
 	function chooseDelivery() {
 		let selectInpost = document.getElementById("delivery-inpost");
 		let selectPocztex = document.getElementById("delivery-pocztex");
 		let formInpost = document.getElementById("form-inpost");
 		let formPocztex = document.getElementById("form-pocztex");
 
+		let dostawaOd = document.getElementById("dostawaOd");
+		let dostawaCenaWybrana = document.getElementById("dostawaCenaWybrana");
+
 		if (selectInpost.checked) {
 			formInpost.style.display = "flex";
 			formPocztex.style.display = "none";
+			dostawaOd.innerText = "Dostawa";
+			dostawaCenaWybrana.innerText = "10.99";
+			displayTotal();
 		} else if (selectPocztex.checked) {
 			formPocztex.style.display = "flex";
 			formInpost.style.display = "none";
+			dostawaOd.innerText = "Dostawa";
+			dostawaCenaWybrana.innerText = "13.99";
+			displayTotal();
 		} 
 	}
 
+	function displayTotal() {
+		let cenaProdukty = parseFloat(document.getElementById("cenaProdukty").textContent);
+		let dostawaCenaWybrana = parseFloat(document.getElementById("dostawaCenaWybrana").textContent);
+		let cenaTotal = document.getElementById("cenaTotal");
+
+		let rabatEl = document.getElementById("rabat");
+		let rabat = rabatEl ? parseFloat(rabatEl.textContent) : 0;
+
+		(cenaProdukty > 0) ? cenaTotal.innerText = Math.round((cenaProdukty + dostawaCenaWybrana - rabat) * 100) / 100 : 0.00;
+	}
+
 	function order() {
-		document.getElementById("loading").classList.add("active");
-		setTimeout(() => {
-			document.getElementById("orderRedirect").submit();
-		}, 2500);
+		if ( parseFloat(document.getElementById("cenaTotal").textContext) > 0 ) {
+			document.getElementById("loading").classList.add("active");
+			setTimeout(() => {
+				document.getElementById("orderRedirect").click();
+			}, 2500);
+		}
 	}
 </script>
 
