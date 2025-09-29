@@ -9,7 +9,7 @@ function setCookie(name, value, days = 365) {
 function getCookie(name) {
 	const value = `; ${document.cookie}`;
 	const parts = value.split(`; ${encodeURIComponent(name)}=`);
-	if (parts.length === 2) return decodeURIComponent(parts.pop().split(';').shift());
+	if (parts.length == 2) return decodeURIComponent(parts.pop().split(';').shift());
 	return null;
 }
 
@@ -33,7 +33,7 @@ function saveCart(cart) {
 
 function addToCart(id, quantity = 1) {
 	const cart = getCart();
-	const existing = cart.find(item => item.id === id);
+	const existing = cart.find(item => item.id == id);
 
 	if (existing) {
 		existing.quantity += quantity;
@@ -51,7 +51,7 @@ function updateCartItem(id, quantity) {
 		cart = cart.filter(item => item.id !== id);
 	} else {
 		cart = cart.map(item =>
-			item.id === id ? { ...item, quantity } : item
+			item.id == id ? { ...item, quantity } : item
 		);
 	}
 
@@ -83,7 +83,7 @@ function addToCartWithInput(productId) {
 
 	if (!isNaN(quantity) && quantity > 0) {
 		const cart = Cart.getCart();
-		const alreadyInCart = cart.some(item => item.id === productId);
+		const alreadyInCart = cart.some(item => item.id == productId);
 
 		if (!alreadyInCart) {
 			Cart.addToCart(productId, quantity);

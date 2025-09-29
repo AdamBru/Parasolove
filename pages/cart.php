@@ -1,4 +1,25 @@
 <?php
+	// Usuwanie produktu 
+	if (isset($_POST['remove_id'])) {
+		$removeId = $_POST['remove_id'];
+
+		if (isset($_COOKIE['cart'])) {
+			$cart = json_decode($_COOKIE['cart'], true);
+
+			if (is_array($cart)) {
+				$cart = array_filter($cart, function ($item) use ($removeId) {
+					return $item['id'] != $removeId;
+				});
+
+				setcookie('cart', json_encode(array_values($cart)), time() + 3600 * 24 * 365, "/");
+				header("Location: " . $_SERVER['REQUEST_URI']);
+				exit;
+			}
+		}
+	}
+?>
+
+<?php
 	$title = " - koszyk";
 	require_once('components/htmlBegin.php');
 	require_once('components/header.php');
@@ -18,7 +39,7 @@
 			<div class="cart-option-container" id="cart-option-products">
 			<?php
 				// Usuwanie produktu 
-				if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['remove_id'])) {
+				if (isset($_POST['remove_id'])) {
 					$removeId = $_POST['remove_id'];
 
 					if (isset($_COOKIE['cart'])) {
@@ -273,7 +294,7 @@
 		radios.forEach(radio => {
 		const container = getContainer(radio);
 		if (!container) return;
-		if (radio === selected) expand(container);
+		if (radio == selected) expand(container);
 		else collapse(container);
 		});
 	};
@@ -337,6 +358,26 @@
 			}, 2500);
 		}
 	}
+
+	// Blokada następnych opcji, jeśli nie spełniono warunku poprzedniej
+	let deliveryRadio = document.getElementById("delivery");
+	let paymentRadio = document.getElementById("payment");
+
+	// Załóżmy, że masz referencję do elementu, np. przez querySelector
+	let cartOptionProducts = document.getElementById("cart-option-products"); 
+
+	// Szukamy dzieci elementu, które zawierają tekst "jakis tekst"
+	let cartOptionProductsChild = Array.from(cartOptionProducts.children).find(child => child.textContent.includes('Twój koszyk jest pusty.'));
+
+	if (cartOptionProducts) {
+		deliveryRadio.disabled = true;
+		paymentRadio.disabled = true;
+	} else {
+		deliveryRadio.disabled = false;
+		paymentRadio.disabled = false;
+	}
+
+
 </script>
 
 
