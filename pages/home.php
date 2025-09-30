@@ -62,11 +62,11 @@
 			<!-- Skrypt generujący dynamicznie karty z produktami -->
 			 	<?php
 					// 3 losowe produkty z kategorii
-					$sql = 'SELECT product_id, name, price, color_id FROM product ORDER BY RAND() LIMIT 3;';
+					$sql = 'SELECT product_id, name, price, color_id, size_id FROM product WHERE is_archived = 0 ORDER BY RAND() LIMIT 3;';
 					$result = mysqli_query($conn, $sql);
 					while ($row = mysqli_fetch_assoc($result)) {
 						echo '<a href="/produkt?id=' . $row['product_id'] . '" class="product-card">
-								'. getProductImage($row['product_id'], 0, $row['color_id']) .'
+								'. getProductImage($row['product_id'], 0, $row['color_id'], $row['size_id']) .'
 								<hr>
 								<h4>' . $row['name'] . '</h4>
 								<p>' . $row['price'] . ' zł</p>

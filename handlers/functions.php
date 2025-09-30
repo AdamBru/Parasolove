@@ -16,7 +16,7 @@
 	}
 
 					// ID produktu, indeks zdjęcia
-	function getProductImage($id, $index = 0, $colorId = null) {
+	function getProductImage($id, $index = 0, $colorId = null, $sizeId = null) {
 		$imageName = $id . '-' . $index . '.webp';
 		$filePath = 'assets/product/' . $imageName;
 
@@ -24,15 +24,14 @@
 
 		// If no-image then add padding
 		if ($src == 'assets/site-images/no-image.svg') {
-			// return '<img src="' . $src . '" style="padding: 5em;" loading="lazy">';
-			return getImageByColor($colorId);
+			return getImageByColorAndSize($colorId, $sizeId);
 		} else {
 			return '<img src="' . $src . '" loading="lazy" style="object-fit: contain;">';
 		}
 	}
 
-	function getImageByColor($colorId) {
-		$filePath = 'assets/product/color/' . $colorId . '.webp';
+	function getImageByColorAndSize($colorId, $sizeId) {
+		$filePath = 'assets/product/tags/' . $colorId . '-' . $sizeId . '.webp';
 
 		$src = file_exists($filePath) ? $filePath : 'assets/site-images/no-image.svg';
 

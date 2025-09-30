@@ -106,7 +106,7 @@
 
 				foreach ($products as $product) {
 					echo '<a href="/produkt?id=' . $product['pro_product_id'] . '" class="product-card">
-							'. getProductImage($product['pro_product_id'], 0, $product['pro_color_id']) .'
+							'. getProductImage($product['pro_product_id'], 0, $product['pro_color_id'], $product['pro_size_id']) .'
 							<hr>
 							<h4>' . $product['pro_name'] . '</h4>
 							<p>' . $product['pro_price'] . ' zł</p>

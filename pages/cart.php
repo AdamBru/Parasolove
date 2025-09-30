@@ -72,7 +72,7 @@
 								?>
 
 								<div class="cart-product">
-									<?= getProductImage($product['pro_product_id'], 0, $product['pro_color_id']) ?>
+									<?= getProductImage($product['pro_product_id'], 0, $product['pro_color_id'], $product['pro_size_id']) ?>
 									
 									<div class="flex-container flex-column nowrap gap-xs">
 										<a href="/produkt?id=<?= $product['pro_product_id'] ?>" class="link-alt"><?= $product['pro_name'] ?></a>
@@ -240,7 +240,7 @@
 				if (isset($_POST['applyCode'])) {
 					$code = mysqli_real_escape_string($conn, $_POST['code']);
 					$_SESSION['submitted_code'] = $code;
-					$sql = "SELECT * FROM `cupon` WHERE `code` = '$code' LIMIT 1;";
+					$sql = "SELECT * FROM `cupon` WHERE `code` = '$code' AND `active_to` >= CURDATE() LIMIT 1;";
 					$result = mysqli_query($conn, $sql);
 
 					if ($result && mysqli_num_rows($result) > 0) {
@@ -351,7 +351,7 @@
 	}
 
 	function order() {
-		if ( parseFloat(document.getElementById("cenaTotal").textContext) > 0 ) {
+		if ( parseFloat(document.getElementById("cenaTotal").innerText) > 0 ) {
 			document.getElementById("loading").classList.add("active");
 			setTimeout(() => {
 				document.getElementById("orderRedirect").click();
@@ -363,15 +363,13 @@
 	let deliveryRadio = document.getElementById("delivery");
 	let paymentRadio = document.getElementById("payment");
 
-	// Załóżmy, że masz referencję do elementu, np. przez querySelector
-	let cartOptionProducts = document.getElementById("cart-option-products"); 
+	let cenaProdukty = parseFloat(document.getElementById("cenaProdukty").textContent);
 
-	// Szukamy dzieci elementu, które zawierają tekst "jakis tekst"
-	let cartOptionProductsChild = Array.from(cartOptionProducts.children).find(child => child.textContent.includes('Twój koszyk jest pusty.'));
-
-	if (cartOptionProducts) {
+	if (cenaProdukty == 0.00) {
 		deliveryRadio.disabled = true;
+		deliveryRadio.parentNode.style.cursor = "auto";
 		paymentRadio.disabled = true;
+		paymentRadio.parentNode.style.cursor = "auto";
 	} else {
 		deliveryRadio.disabled = false;
 		paymentRadio.disabled = false;

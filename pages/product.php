@@ -20,7 +20,7 @@
 			echo ($getProducts['foundProducts'] == 0) ? '<script> window.location.replace("/not-found"); </script>' : '';
 		?>
 
-		<div class="product-img"> <?= getProductImage($product['pro_product_id'], 0, $product['pro_color_id']) ?> </div>
+		<div class="product-img"> <?= getProductImage($product['pro_product_id'], 0, $product['pro_color_id'], $product['pro_size_id']) ?> </div>
 
 		<div class="flex-container flex-1 flex-column gap-l mobile-description" style="margin-left: 1rem;">
 			<h2> <?= $product['pro_name'] ?> </h2>

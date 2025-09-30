@@ -1,6 +1,6 @@
 <div class="flex-container align-center flex-row nowrap gap-s">
 	<button data-modal-target="#add-product" class="btn add"> <b style="margin: 0 .2rem">+</b> Utwórz produkt</button>
-	<div style="width: 1.5rem; height: .5rem; margin: .5rem 0 .5rem 1rem; background: #f8fe3875; border: 1px solid #ccc;"></div> - produkt zarchiwizowany
+	<div style="width: 1.5rem; height: .5rem; margin: .5rem 0 .5rem 1rem; background: #f8fe3875; border: 1px solid #ccc;"></div> -&nbsp; produkt zarchiwizowany
 </div>
 
 <div class="table-container flex-1">
@@ -64,7 +64,7 @@
 				foreach ($products as $product) {
 					echo '<tr ' . ( ($product['pro_is_archived'] == 1) ? 'style="background: #f8fe3875;"' : '' ) . '>
 							<td>' . $product['pro_product_id'] . '</td>
-							<td class="td-img">' . getProductImage($product['pro_product_id'], 0, $product['pro_color_id']) . '</td>
+							<td class="td-img">' . getProductImage($product['pro_product_id'], 0, $product['pro_color_id'], $product['pro_size_id']) . '</td>
 							<td><a href="/produkt?id=' . $product['pro_product_id'] . '">' . textTooLong($product['pro_name'], 45) . '</a></td>
 							<td>' . $product['cat_name'] . '</td>
 							<td class="td-color"> <label class="color-checkbox-label" style="background: ' . $product['col_hex_code'] . '; cursor: auto;"></label> </td>

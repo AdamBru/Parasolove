@@ -6,6 +6,4 @@ AdamBru &copy; IX 2025
 
 ## TODO 
 - admin: +zamówienia
-- admin: +kody rabatowe
-- getProductImage: (color, +size) !important
-- koszyk: +disabled dla inputa:radio nastepnego kroku jesli nie wpelnione dane / spelnione warunki w poprzenim
+- składanie zamówienia !important
