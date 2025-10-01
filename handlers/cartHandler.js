@@ -27,7 +27,7 @@ function getCart() {
 }
 
 function saveCart(cart) {
-	setCookie(CART_KEY, JSON.stringify(cart), 7);
+	setCookie(CART_KEY, JSON.stringify(cart), 365);
 	updateCartCount();
 }
 

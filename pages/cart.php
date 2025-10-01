@@ -66,7 +66,7 @@
 										<div class="flex-container flex-column nowrap" style="justify-content: space-between; gap: .75rem; width: 100%;">
 											<div class="flex-container flex-row nowrap gap-xs">
 												<input type="number" id="" value="<?= $item['quantity'] ?>" style="width: 2.5rem; height: 1.5rem; text-align: center; font-size: .85rem;">
-												<label for=""> szt.</label>
+												<label> szt.</label>
 											</div>
 											<div style="display: inline;">
 												<input type="hidden" name="remove_id" value="<?= htmlspecialchars($item['id']) ?>">
@@ -202,7 +202,7 @@
 
 		<div class="row">
 			<span>Wartość produktów</span>
-			<b id="cenaProdukty"><?= ($total > 0) ? $total : '0.00' ?> zł</b>
+			<b class="afterZl" id="cenaProdukty"><?= ($total > 0) ? $total : '0.00' ?></b>
 			<?php if ($total == 0.00) {unset($_SESSION['discount']); unset($_SESSION['submitted_code']);} ?>
 		</div>
 
