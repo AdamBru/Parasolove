@@ -27,6 +27,7 @@
 	// Zawołanie breadcrumba
 	require_once('components/breadcrumb.php');
 ?>
+<form method="post">
 
 <div class="page-container flex-row mobile-cart gap-l">
 	
@@ -38,25 +39,6 @@
 		</label>
 			<div class="cart-option-container" id="cart-option-products">
 			<?php
-				// Usuwanie produktu 
-				if (isset($_POST['remove_id'])) {
-					$removeId = $_POST['remove_id'];
-
-					if (isset($_COOKIE['cart'])) {
-						$cart = json_decode($_COOKIE['cart'], true);
-
-						if (is_array($cart)) {
-							$cart = array_filter($cart, function ($item) use ($removeId) {
-								return $item['id'] != $removeId;
-							});
-
-							setcookie('cart', json_encode(array_values($cart)), time() + 3600 * 24 * 365, "/");
-							header("Location: " . $_SERVER['REQUEST_URI']);
-							exit;
-						}
-					}
-				}
-
 				// Wyświetlanie produktów w koszyku
 				$total = 0.00;
 				if (isset($_COOKIE['cart'])) {
@@ -86,10 +68,10 @@
 												<input type="number" id="" value="<?= $item['quantity'] ?>" style="width: 2.5rem; height: 1.5rem; text-align: center; font-size: .85rem;">
 												<label for=""> szt.</label>
 											</div>
-											<form method="post" style="display: inline;">
+											<div style="display: inline;">
 												<input type="hidden" name="remove_id" value="<?= htmlspecialchars($item['id']) ?>">
 												<button type="submit" class="remove-icon link-alt"></button>
-											</form>
+											</div>
 										</div>
 									</div>
 								</div>
@@ -97,7 +79,7 @@
 								
 								<?php } ?>
 							
-							<button class="btn" style="margin: 0 auto; padding: .4rem .85rem; width: fit-content;" onclick="document.getElementById('delivery').click()">Wbierz opcję dostawy</button>
+							<input type="button" class="btn" style="margin: 0 auto; padding: .4rem .85rem; width: fit-content;" onclick="document.getElementById('delivery').click()" value="Wbierz opcję dostawy">
 							<?php
 						}
 					} else {
@@ -117,20 +99,20 @@
 		</label>
 			<div class="cart-option-container" id="cart-option-delivery">
 
-				<div class="flex-container flex-row gap-m mobile-justify-center" style="magin-bottom: .5rem;">
+				<div method="post" class="flex-container flex-row gap-m mobile-justify-center" style="magin-bottom: .5rem;">
 					<label for="delivery-inpost" class="btn deliverer" onclick="chooseDelivery('form-inpost')">
 						<img src="assets/site-images/delivery-InPost.webp">
 						<span>10.99 zł</span>
-						<input type="radio" name="delivery" id="delivery-inpost">
+						<input type="radio" name="delivery" value="inpost" id="delivery-inpost" <?= (isset($_POST['delivery']) && $_POST['delivery'] == 'inpost') ? 'checked' : '' ?>>
 					</label>
 					<label for="delivery-pocztex" class="btn deliverer" onclick="chooseDelivery('form-pocztex')">
 						<img src="assets/site-images/delivery-Pocztex.webp" style="padding: .7rem .5rem;">
 						<span>13.99 zł</span>
-						<input type="radio" name="delivery" id="delivery-pocztex">
+						<input type="radio" name="delivery" value="pocztex" id="delivery-pocztex"  <?= (isset($_POST['delivery']) && $_POST['delivery'] == 'pocztex') ? 'checked' : '' ?>>
 					</label>
 				</div>
 
-				<form method="post" class="deliverer-details" id="form-inpost" style="display: none;">
+				<div class="deliverer-details" id="form-inpost" style="display: none;">
 					<label for="form-inpost-imie">Imię</label>
 						<input type="text" id="form-inpost-imie">
 					<label for="form-inpost-nazwisko">Nazwisko</label>
@@ -141,9 +123,9 @@
 						<input type="tel" id="form-inpost-telefon">
 					<label for="form-inpost-paczkomat">Numer paczkomatu InPost &nbsp;<a href="https://inpost.pl/znajdz-paczkomat" target="blank" class="help">?</a> </label>
 						<input type="text" id="form-inpost-paczkomat">
-				</form>
+				</div>
 
-				<form method="post" class="deliverer-details" id="form-pocztex" style="display: none;">
+				<div class="deliverer-details" id="form-pocztex" style="display: none;">
 					<label for="form-pocztex-imie">Imię</label>
 						<input type="text" id="form-pocztex-imie">
 					<label for="form-pocztex-nazwisko">Nazwisko</label>
@@ -160,9 +142,9 @@
 						<input type="text" id="form-pocztex-ulica">
 					<label for="form-pocztex-lokal">Lokal</label>
 						<input type="text" id="form-pocztex-lokal">
-				</form>
+				</div>
 
-				<button class="btn" style="margin: 1.5rem auto 0; padding: .4rem .85rem; width: fit-content;" onclick="document.getElementById('payment').click()">Wbierz opcję płatności</button>
+				<input type="button" class="btn" style="margin: 1.5rem auto 0; padding: .4rem .85rem; width: fit-content;" onclick="document.getElementById('payment').click()" value="Wbierz opcję płatności">
 			</div>
 
 		<label for="payment" class="cart-header">
@@ -192,12 +174,21 @@
 
 				</div>
 
-				<form method="post"> <input type="submit" id="orderRedirect" name="orderRedirect" style="display: none;"> </form>
-				<button class="btn" style="margin: 1.5rem auto 0; padding: .4rem 2.5rem; width: fit-content;" onclick="order()">Zapłać</button> 
+				<div> <input type="submit" id="orderRedirect" name="orderRedirect" style="display: none;"> </div>
+				<input type="button" class="btn" style="margin: 1.5rem auto 0; padding: .4rem 2.5rem; width: fit-content;" onclick="order()" value="Zapłać"> 
 				<?php
+				// Wysyłanie zamówienia
 					if (isset($_POST['orderRedirect'])) {
-						$_SESSION['order'] = 'success';
-						echo '<script>window.location.href = "zamowienie";</script>';
+						print_r($_POST);
+						if (isset($_POST['delivery']) && $_POST['delivery'] == 'inpost') {
+							echo 'wybrano inpost';
+						} else {
+							echo 'nie wybrano dostawy';
+						}
+
+
+						// $_SESSION['order'] = 'success';
+						// echo '<script>window.location.href = "zamowienie";</script>';
 					}
 				?>
 			</div>
@@ -228,13 +219,13 @@
 			: ''
 		?>
 
-		<form method="post" style="gap: .25rem; margin-top: .25rem;">
+		<div method="post" style="gap: .25rem; margin-top: .25rem;">
 			<span style="font-size: .9rem">Kod rabatowy</span>
 			<div style="position: relative;">
 				<input type="text" name="code" id="code" style="padding: .25rem .5rem; font-size: .9rem" value="<?= isset($_SESSION['submitted_code']) ? $_SESSION['submitted_code'] : '' ?>">
 				<input type="submit" name="applyCode" class="arrow-right-icon" value="" style="opacity: .75;">
 			</div>
-		</form>
+		</div>
 
 			<?php
 				if (isset($_POST['applyCode'])) {
@@ -265,6 +256,8 @@
 	</aside>
 
 </div>
+
+</form>
 
 <div id="loading"></div>
 

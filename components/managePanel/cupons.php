@@ -75,15 +75,27 @@
 		if ( isset($_POST['new-cupon-name']) && $_POST['new-cupon-name'] != "" && 
 			 isset($_POST['new-cupon-discount']) && $_POST['new-cupon-discount'] != "" && 
 			 isset($_POST['new-cupon-date']) && $_POST['new-cupon-date'] != "" ) {
-			$sql = 'INSERT INTO `cupon` VALUES (NULL, "' .  $_POST['new-cupon-name'] . '", ' .  $_POST['new-cupon-discount'] . ', "' .  $_POST['new-cupon-date'] . '");';
-			if (mysqli_query($conn, $sql)) {
-				echo '<script> 
-						alert("Dodano kod rabatowy: ' . $_POST['new-cupon-name'] . '");
-						window.location.href = "panel-sprzedawcy?view=cupons";
-					 </script>';
-				$_POST = [];
+			
+			if ($_POST['new-cupon-discount'] < 1 || $_POST['new-cupon-discount'] > 99) {
+				echo '<script>
+						document.addEventListener("DOMContentLoaded", () => {
+							setTimeout(() => {
+								document.querySelector("[data-modal-target=\"#add-cupon\"]").click();
+							}, 0);
+						});
+					</script>';
+				echo '<p class="error-chmurka" style="z-index: 6;">Wartość znżki musi być w zakresie 1-99.</p>';
 			} else {
-				echo '<script> alert("Błąd\n\nWystąpił błąd przy dodawaniu kodu rabatowego.") </script>';
+				$sql = 'INSERT INTO `cupon` VALUES (NULL, "' .  $_POST['new-cupon-name'] . '", ' .  $_POST['new-cupon-discount'] . ', "' .  $_POST['new-cupon-date'] . '");';
+				if (mysqli_query($conn, $sql)) {
+					echo '<script> 
+					alert("Dodano kod rabatowy: ' . $_POST['new-cupon-name'] . '");
+					window.location.href = "panel-sprzedawcy?view=cupons";
+					</script>';
+					$_POST = [];
+				} else {
+					echo '<script> alert("Błąd\n\nWystąpił błąd przy dodawaniu kodu rabatowego.") </script>';
+				}
 			}
 		} else {
 			echo '<script>
