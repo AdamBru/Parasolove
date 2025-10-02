@@ -1,22 +1,23 @@
 <?php
-	// Usuwanie produktu 
-	if (isset($_POST['remove_id'])) {
-		$removeId = $_POST['remove_id'];
+	// // Usuwanie produktu 
+	// if (isset($_POST['remove_id'])) {
+	// 	$removeId = $_POST['remove_id'];
 
-		if (isset($_COOKIE['cart'])) {
-			$cart = json_decode($_COOKIE['cart'], true);
+	// 	if (isset($_COOKIE['cart'])) {
+	// 		$cart = json_decode($_COOKIE['cart'], true);
 
-			if (is_array($cart)) {
-				$cart = array_filter($cart, function ($item) use ($removeId) {
-					return $item['id'] != $removeId;
-				});
+	// 		if (is_array($cart)) {
+	// 			$cart = array_filter($cart, function ($item) use ($removeId) {
+	// 				return $item['id'] != $removeId;
+	// 			});
 
-				setcookie('cart', json_encode(array_values($cart)), time() + 3600 * 24 * 365, "/");
-				header("Location: " . $_SERVER['REQUEST_URI']);
-				exit;
-			}
-		}
-	}
+	// 			setcookie('cart', json_encode(array_values($cart)), time() + 3600 * 24 * 365, "/");
+	// 			header("Location: " . $_SERVER['REQUEST_URI']);
+	// 			exit;
+	// 		}
+	// 	}
+	// }
+	// 						PRZEROBIĆ NA LINK, KTÓRY USUWA I WRACA DO KOSZYKA
 ?>
 
 <?php
@@ -70,7 +71,7 @@
 											</div>
 											<div style="display: inline;">
 												<input type="hidden" name="remove_id" value="<?= htmlspecialchars($item['id']) ?>">
-												<button type="submit" class="remove-icon link-alt"></button>
+												<a href="" class="remove-icon link-alt">TODO: JAKO LINK</a>
 											</div>
 										</div>
 									</div>
@@ -187,8 +188,8 @@
 						}
 
 
-						// $_SESSION['order'] = 'success';
-						// echo '<script>window.location.href = "zamowienie";</script>';
+						$_SESSION['order'] = 'success';
+						echo '<script>window.location.href = "zamowienie";</script>';
 					}
 				?>
 			</div>
@@ -219,7 +220,7 @@
 			: ''
 		?>
 
-		<div method="post" style="gap: .25rem; margin-top: .25rem;">
+		<div style="gap: .25rem; margin-top: .25rem;">
 			<span style="font-size: .9rem">Kod rabatowy</span>
 			<div style="position: relative;">
 				<input type="text" name="code" id="code" style="padding: .25rem .5rem; font-size: .9rem" value="<?= isset($_SESSION['submitted_code']) ? $_SESSION['submitted_code'] : '' ?>">
@@ -236,12 +237,18 @@
 
 					if ($result && mysqli_num_rows($result) > 0) {
 						$row = mysqli_fetch_assoc($result);
-						$_SESSION['discount'] = $row['discount'];
+						if (is_numeric($row['discount']) && $row['discount'] > 0) {
+							$_SESSION['discount'] = $row['discount'];
+						} else {
+							// Jeżeli rabat nie jest poprawny, usuń rabat
+							unset($_SESSION['discount']);
+						}
 					} else {
-						echo '<span style="font-weight: 300;">Niepoprawny kod.</span>';
+						// Nieprawidłowy kod rabatowy
 						unset($_SESSION['discount']);
 						unset($_SESSION['submitted_code']);
 					}
+
 
 					echo '<script>window.location.href = "' . $_SERVER['REQUEST_URI'] . '";</script>';
 					exit;
@@ -306,17 +313,18 @@
 </script>
 
 <script>
+	
 	displayTotal();
-
+	
 	function chooseDelivery() {
 		let selectInpost = document.getElementById("delivery-inpost");
 		let selectPocztex = document.getElementById("delivery-pocztex");
 		let formInpost = document.getElementById("form-inpost");
 		let formPocztex = document.getElementById("form-pocztex");
-
+		
 		let dostawaOd = document.getElementById("dostawaOd");
 		let dostawaCenaWybrana = document.getElementById("dostawaCenaWybrana");
-
+		
 		if (selectInpost.checked) {
 			formInpost.style.display = "flex";
 			formPocztex.style.display = "none";
@@ -338,10 +346,12 @@
 		let cenaTotal = document.getElementById("cenaTotal");
 
 		let rabatEl = document.getElementById("rabat");
-		let rabat = rabatEl ? parseFloat(rabatEl.textContent) : 0;
+		let rabat = rabatEl ? parseFloat(rabatEl.textContent.replace(' zł', '').trim()) : 0;
 
-		(cenaProdukty > 0) ? cenaTotal.innerText = Math.round((cenaProdukty + dostawaCenaWybrana - rabat) * 100) / 100 : 0.00;
+		let total = cenaProdukty + dostawaCenaWybrana - rabat;
+		cenaTotal.innerText = total > 0 ? total.toFixed(2) : '0.00';
 	}
+
 
 	function order() {
 		if ( parseFloat(document.getElementById("cenaTotal").innerText) > 0 ) {

@@ -72,7 +72,7 @@
 					$result = mysqli_query($conn, $sql);
 					while ($row = mysqli_fetch_assoc($result)) {
 						echo '<a href="/produkt?id=' . $row['product_id'] . '" class="product-card">
-								'. getProductImage($row['product_id'], 0, $row['color_id']) .'
+								'. getProductImage($row['product_id'], 0, $row['color_id'],  $product['pro_size_id']) .'
 								<hr>
 								<h4>' . $row['name'] . '</h4>
 								<p>' . $row['price'] . ' zł</p>
