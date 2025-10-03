@@ -6,6 +6,9 @@
 	// Zawołanie breadcrumba
 	require_once('components/breadcrumb.php');
 ?>
+
+<div id="loading"></div>
+
 <form method="post">
 
 <div class="page-container flex-row mobile-cart gap-l">
@@ -34,8 +37,7 @@
 			<?php require_once('components/cartModules/cart_payment.php'); ?>
 
 
-		<div> <input type="submit" id="orderRedirect" name="orderRedirect" style="display: none;"> </div>
-		<div> <input type="submit" id="orderRedirectFinal" name="orderRedirectFinal" style="display: none;"> </div>
+		<input type="submit" id="orderRedirect" name="orderRedirect" style="display: none;">
 		<?php
 		// Wysyłanie zamówienia
 			if (isset($_POST['orderRedirect'])) {
@@ -53,13 +55,17 @@
 					) {
 						// Wszystkie pola w form-inpost są wypełnione, czy wybrano płatość?
 						if (isset($_POST['payment'])) {
-							echo 'wszystkie pola w form-inpost są wypełnione i wybrano płatość ' . $_POST['payment'];
-							// placeOrder();
+							placeOrder();
+							echo '<script> document.getElementById("payment").click(); </script>';
+							echo '<script> document.getElementById("payment-' . $_POST['payment'] . '").click(); </script>';
 						} else {
 							// Wszystkie pola w form-inpost są wypełnione ale nie wybrano płatności
-							echo 'wszystkie pola w form-inpost są wypełnione ale nie wybrano płatności';
 							echo '<script> setTimeout(() => { document.getElementById("delivery-inpost").click(); }, 0); </script>';
 							echo '<script> document.getElementById("payment").click(); </script>';
+							echo '<div class="infoPopup flex align-center justify-center flex-row nowrap gap-m" id="infoPopup" style="max-width: none; background: #bb6b6b; color: #fff; font-weight: 400;">
+									<p style="white-space: nowrap;">Należy wybrać metodę płatności.</p>
+									<input type="button" id="accept-cookie" class="btn flex-0" value="OK" onclick="hidePopup()" style="padding: .1rem .6rem; background: #fff;">
+								</div>';
 						}
 					}
 					else {
@@ -85,13 +91,17 @@
 					) {
 						// Wszystkie pola w form-pocztex są wypełnione, czy wybrano płatość?
 						if (isset($_POST['payment'])) {
-							echo 'wszystkie pola w form-pocztex są wypełnione i wybrano płatość ' . $_POST['payment'];
-							// placeOrder();
+							placeOrder();
+							echo '<script> document.getElementById("payment").click(); </script>';
+							echo '<script> document.getElementById("payment-' . $_POST['payment'] . '").click(); </script>';
 						} else {
 							// Wszystkie pola w form-pocztex są wypełnione ale nie wybrano płatności
-							echo 'wszystkie pola w form-pocztex są wypełnione ale nie wybrano płatności';
 							echo '<script> setTimeout(() => { document.getElementById("delivery-pocztex").click(); }, 0); </script>';
 							echo '<script> document.getElementById("payment").click(); </script>';
+							echo '<div class="infoPopup flex align-center justify-center flex-row nowrap gap-m" id="infoPopup" style="max-width: none; background: #bb6b6b; color: #fff; font-weight: 400;">
+									<p style="white-space: nowrap;">Należy wybrać metodę płatności.</p>
+									<input type="button" id="accept-cookie" class="btn flex-0" value="OK" onclick="hidePopup()" style="padding: .1rem .6rem; background: #fff;">
+								</div>';
 						}
 					}
 					else {
@@ -113,17 +123,16 @@
 					echo '<script> document.getElementById("delivery").click(); </script>';
 				}
 
-				// echo '<script>
-				// 		setTimeout(() => {
-				// 			document.getElementById("orderRedirectFinal").click();
-				// 		}, 2500);
-				// 	</script>';
 			}
-
+			
 			function placeOrder() {
-				echo '<script> document.getElementById("loading").classList.add("active"); </script>';
-				// $_SESSION['order'] = 'success';
-				// echo '<script>window.location.href = "zamowienie";</script>';
+				$_SESSION['order'] = 'success';
+				echo '<script>
+						document.getElementById("loading").classList.add("active");
+						setTimeout(() => {
+							window.location.href = "zamowienie";
+						}, 3000);
+					</script>';
 			}
 		?>
 
@@ -136,7 +145,6 @@
 
 </form>
 
-<div id="loading"></div>
 
 <script>
 	// Skrypt odpowiadający za rozwijanie elementów strony koszyka

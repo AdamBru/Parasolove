@@ -22,40 +22,13 @@
 		: ''
 	?>
 
-	<form method="post" style="gap: .25rem; margin-top: .25rem;">
-		<span style="font-size: .9rem; margin-top: .5rem;">Kod rabatowy</span>
+	<form method="post" action="handlers/cupon.php" style="gap: .25rem; margin-top: .25rem;">
+		<span style="font-size: .9rem; margin-top: .5rem; color: #333;">Kod rabatowy</span>
 		<div style="position: relative;">
-			<input type="text" name="code" id="code" style="padding: .25rem .5rem; font-size: .9rem" value="<?= isset($_SESSION['submitted_code']) ? $_SESSION['submitted_code'] : '' ?>" 		placeholder="Funkcja niedostępna" disabled>
-			<input type="submit" name="applyCode" class="arrow-right-icon" value="" style="opacity: .75;" 		disabled>
+			<input type="text" name="code" id="code" style="padding: .25rem .5rem; font-size: .9rem" value="<?= isset($_SESSION['submitted_code']) ? $_SESSION['submitted_code'] : '' ?>">
+			<input type="submit" name="applyCode" class="arrow-right-icon" value="" style="opacity: .75;">
 		</div>
 	</form>
-
-		<?php
-			if (isset($_POST['applyCode'])) {
-				$code = mysqli_real_escape_string($conn, $_POST['code']);
-				$_SESSION['submitted_code'] = $code;
-				$sql = "SELECT * FROM `cupon` WHERE `code` = '$code' AND `active_to` >= CURDATE() LIMIT 1;";
-				$result = mysqli_query($conn, $sql);
-
-				if ($result && mysqli_num_rows($result) > 0) {
-					$row = mysqli_fetch_assoc($result);
-					if (is_numeric($row['discount']) && $row['discount'] > 0) {
-						$_SESSION['discount'] = $row['discount'];
-					} else {
-						// Jeżeli rabat nie jest poprawny, usuń rabat
-						unset($_SESSION['discount']);
-					}
-				} else {
-					// Nieprawidłowy kod rabatowy
-					unset($_SESSION['discount']);
-					unset($_SESSION['submitted_code']);
-				}
-
-
-				echo '<script>window.location.href = "' . $_SERVER['REQUEST_URI'] . '";</script>';
-				exit;
-			}
-		?>
 
 	<div class="row" style="margin-top: 1rem; font-size: 1rem">
 		<span>Suma</span>
