@@ -6,7 +6,7 @@
 		$cart = json_decode($_COOKIE['cart'], true);
 		if (is_array($cart)) {
 			if (empty($cart)) {
-				echo '<div class="cart-product" style="margin-bottom: 1rem;"> Twój koszyk jest pusty. </div>';
+				echo '<div class="cart-product" style="margin-bottom: 1rem; border: none;"> Twój koszyk jest pusty. </div>';
 			} else {
 				foreach ($cart as $item) {
 					$getProducts = getProducts($conn, 'default', false, true, $item['id']);
@@ -30,15 +30,14 @@
 							
 							<div class="flex-container flex-column nowrap" style="justify-content: space-between; gap: .75rem; width: 100%;">
 								<!-- Liczba sztuk -->
-								<div class="flex-container flex-row nowrap gap-xs">
+								<div class="flex-container justify-center align-center flex-row nowrap gap-xs">
 									<input type="number" id="" value="<?= $item['quantity'] ?>" style="width: 2.5rem; height: 1.5rem; text-align: center; font-size: .85rem;">
 									<label> szt.</label>
 								</div>
 
 								<!-- Przycisk: Usuń -->
-								<div style="display: inline;">
-									<input type="hidden" name="remove_id" value="<?= ($item['id']) ?>">
-									<a href="" class="remove-icon link-alt">TODO: JAKO LINK</a>
+								 <div class="flex-container justify-center align-center flex-row nowrap">
+									 <a href="/removeProduct?id=<?= $product['pro_product_id'] ?>" class="remove-icon link-alt"></a>
 								</div>
 							</div>
 						</div>
@@ -47,14 +46,14 @@
 					<?php } ?>
 				
 				<!-- Przycisk: Wbierz opcję dostawy -->
-				<input type="button" class="btn" style="margin: 0 auto; padding: .4rem .85rem; width: fit-content;" onclick="document.getElementById('delivery').click()" value="Wbierz opcję dostawy">
+				<input type="button" class="btn" style="margin: 0 auto 1rem; padding: .4rem .85rem; width: fit-content;" onclick="document.getElementById('delivery').click()" value="Wbierz opcję dostawy">
 				<?php
 			}
 		} else {
 			echo "Nieprawidłowy format koszyka.";
 		}
 	} else {
-		echo '<div class="cart-product" style="margin-bottom: 1rem;"> Twój koszyk jest pusty. </div>';
+		echo '<div class="cart-product" style="margin-bottom: 1rem; border: none;"> Twój koszyk jest pusty. </div>';
 	}
 ?>
 

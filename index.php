@@ -17,6 +17,7 @@
 		'/panel-sprzedawcy' => 'pages/managePanel.php',
 		'/koszyk' => 'pages/cart.php',
 		'/zamowienie' => 'pages/order.php',
+		'/removeProduct' => 'handlers/cart_removeProduct.php',
 		// '/temp' => 'pages/TEMP.php',
 	];
 

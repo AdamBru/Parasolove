@@ -22,13 +22,13 @@
 		: ''
 	?>
 
-	<div style="gap: .25rem; margin-top: .25rem;">
-		<span style="font-size: .9rem">Kod rabatowy</span>
+	<form method="post" style="gap: .25rem; margin-top: .25rem;">
+		<span style="font-size: .9rem; margin-top: .5rem;">Kod rabatowy</span>
 		<div style="position: relative;">
-			<input type="text" name="code" id="code" style="padding: .25rem .5rem; font-size: .9rem" value="<?= isset($_SESSION['submitted_code']) ? $_SESSION['submitted_code'] : '' ?>">
-			<input type="submit" name="applyCode" class="arrow-right-icon" value="" style="opacity: .75;">
+			<input type="text" name="code" id="code" style="padding: .25rem .5rem; font-size: .9rem" value="<?= isset($_SESSION['submitted_code']) ? $_SESSION['submitted_code'] : '' ?>" 		placeholder="Funkcja niedostępna" disabled>
+			<input type="submit" name="applyCode" class="arrow-right-icon" value="" style="opacity: .75;" 		disabled>
 		</div>
-	</div>
+	</form>
 
 		<?php
 			if (isset($_POST['applyCode'])) {

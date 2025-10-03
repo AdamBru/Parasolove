@@ -1,26 +1,4 @@
 <?php
-	// // Usuwanie produktu 
-	// if (isset($_POST['remove_id'])) {
-	// 	$removeId = $_POST['remove_id'];
-
-	// 	if (isset($_COOKIE['cart'])) {
-	// 		$cart = json_decode($_COOKIE['cart'], true);
-
-	// 		if (is_array($cart)) {
-	// 			$cart = array_filter($cart, function ($item) use ($removeId) {
-	// 				return $item['id'] != $removeId;
-	// 			});
-
-	// 			setcookie('cart', json_encode(array_values($cart)), time() + 3600 * 24 * 365, "/");
-	// 			header("Location: " . $_SERVER['REQUEST_URI']);
-	// 			exit;
-	// 		}
-	// 	}
-	// }
-	// 						PRZEROBIĆ NA LINK, KTÓRY USUWA I WRACA DO KOSZYKA
-?>
-
-<?php
 	$title = " - koszyk";
 	require_once('components/htmlBegin.php');
 	require_once('components/header.php');
@@ -56,22 +34,98 @@
 			<?php require_once('components/cartModules/cart_payment.php'); ?>
 
 
-				<div> <input type="submit" id="orderRedirect" name="orderRedirect" style="display: none;"> </div>
-				<?php
-				// Wysyłanie zamówienia
-					if (isset($_POST['orderRedirect'])) {
-						print_r($_POST);
-						if (isset($_POST['delivery']) && $_POST['delivery'] == 'inpost') {
-							echo 'wybrano inpost';
+		<div> <input type="submit" id="orderRedirect" name="orderRedirect" style="display: none;"> </div>
+		<div> <input type="submit" id="orderRedirectFinal" name="orderRedirectFinal" style="display: none;"> </div>
+		<?php
+		// Wysyłanie zamówienia
+			if (isset($_POST['orderRedirect'])) {
+					// echo '<pre>';
+					// print_r($_POST);
+					// echo '</pre>';
+				if (isset($_POST['delivery']) && $_POST['delivery'] == 'inpost') {
+					// Wybrano dostawę: InPost, sprawdzam pola form-inpost
+					if (
+						isset($_POST['form-inpost-imie']) && !empty($_POST['form-inpost-imie']) && 
+						isset($_POST['form-inpost-nazwisko']) && !empty($_POST['form-inpost-nazwisko']) && 
+						isset($_POST['form-inpost-email']) && !empty($_POST['form-inpost-email']) && 
+						isset($_POST['form-inpost-telefon']) && !empty($_POST['form-inpost-telefon']) && 
+						isset($_POST['form-inpost-paczkomat']) && !empty($_POST['form-inpost-paczkomat'])
+					) {
+						// Wszystkie pola w form-inpost są wypełnione, czy wybrano płatość?
+						if (isset($_POST['payment'])) {
+							echo 'wszystkie pola w form-inpost są wypełnione i wybrano płatość ' . $_POST['payment'];
+							// placeOrder();
 						} else {
-							echo 'nie wybrano dostawy';
+							// Wszystkie pola w form-inpost są wypełnione ale nie wybrano płatności
+							echo 'wszystkie pola w form-inpost są wypełnione ale nie wybrano płatności';
+							echo '<script> setTimeout(() => { document.getElementById("delivery-inpost").click(); }, 0); </script>';
+							echo '<script> document.getElementById("payment").click(); </script>';
 						}
-
-
-						$_SESSION['order'] = 'success';
-						echo '<script>window.location.href = "zamowienie";</script>';
 					}
-				?>
+					else {
+						// Brakuje danych w formularzu InPost
+						echo '<div class="infoPopup flex align-center justify-center flex-row nowrap gap-m" id="infoPopup" style="max-width: none; background: #bb6b6b; color: #fff; font-weight: 400;">
+								<p style="white-space: nowrap;">Należy wypełnić wszystkie pola.</p>
+								<input type="button" id="accept-cookie" class="btn flex-0" value="OK" onclick="hidePopup()" style="padding: .1rem .6rem; background: #fff;">
+							</div>';
+						echo '<script> document.getElementById("delivery").click(); </script>';
+						echo '<script> setTimeout(() => { document.getElementById("delivery-inpost").click(); }, 0); </script>';
+					}
+				} else if (isset($_POST['delivery']) && $_POST['delivery'] == 'pocztex') {
+					// Wybrano dostawę: Pocztex, sprawdzam pola form-pocztex
+					if (
+						isset($_POST['form-pocztex-imie']) && !empty($_POST['form-pocztex-imie']) && 
+						isset($_POST['form-pocztex-nazwisko']) && !empty($_POST['form-pocztex-nazwisko']) && 
+						isset($_POST['form-pocztex-email']) && !empty($_POST['form-pocztex-email']) && 
+						isset($_POST['form-pocztex-telefon']) && !empty($_POST['form-pocztex-telefon']) && 
+						isset($_POST['form-pocztex-kodPocztowy']) && !empty($_POST['form-pocztex-kodPocztowy']) && 
+						isset($_POST['form-pocztex-miasto']) && !empty($_POST['form-pocztex-miasto']) && 
+						isset($_POST['form-pocztex-ulica']) && !empty($_POST['form-pocztex-ulica']) && 
+						isset($_POST['form-pocztex-lokal']) && !empty($_POST['form-pocztex-lokal']) 
+					) {
+						// Wszystkie pola w form-pocztex są wypełnione, czy wybrano płatość?
+						if (isset($_POST['payment'])) {
+							echo 'wszystkie pola w form-pocztex są wypełnione i wybrano płatość ' . $_POST['payment'];
+							// placeOrder();
+						} else {
+							// Wszystkie pola w form-pocztex są wypełnione ale nie wybrano płatności
+							echo 'wszystkie pola w form-pocztex są wypełnione ale nie wybrano płatności';
+							echo '<script> setTimeout(() => { document.getElementById("delivery-pocztex").click(); }, 0); </script>';
+							echo '<script> document.getElementById("payment").click(); </script>';
+						}
+					}
+					else {
+						// Brakuje danych w formularzu Pocztex
+						echo '<div class="infoPopup flex align-center justify-center flex-row nowrap gap-m" id="infoPopup" style="max-width: none; background: #bb6b6b; color: #fff; font-weight: 400;">
+								<p style="white-space: nowrap;">Należy wypełnić wszystkie pola.</p>
+								<input type="button" id="accept-cookie" class="btn flex-0" value="OK" onclick="hidePopup()" style="padding: .1rem .6rem; background: #fff;">
+							</div>';
+						echo '<script> document.getElementById("delivery").click(); </script>';
+						echo '<script> setTimeout(() => { document.getElementById("delivery-pocztex").click(); }, 0); </script>';
+					}
+
+				} else {
+					// Error: Nie wybrano opcji dostawy
+					echo '<div class="infoPopup flex align-center justify-center flex-row nowrap gap-m" id="infoPopup" style="max-width: none; background: #bb6b6b; color: #fff; font-weight: 400;">
+							<p style="white-space: nowrap;">Wymagane jest wybranie opcji dostawy.</p>
+							<input type="button" id="accept-cookie" class="btn flex-0" value="OK" onclick="hidePopup()" style="padding: .1rem .6rem; background: #fff;">
+						</div>';
+					echo '<script> document.getElementById("delivery").click(); </script>';
+				}
+
+				// echo '<script>
+				// 		setTimeout(() => {
+				// 			document.getElementById("orderRedirectFinal").click();
+				// 		}, 2500);
+				// 	</script>';
+			}
+
+			function placeOrder() {
+				echo '<script> document.getElementById("loading").classList.add("active"); </script>';
+				// $_SESSION['order'] = 'success';
+				// echo '<script>window.location.href = "zamowienie";</script>';
+			}
+		?>
 
 	</div>
 
@@ -165,16 +219,15 @@
 		let rabat = rabatEl ? parseFloat(rabatEl.textContent.replace(' zł', '').trim()) : 0;
 
 		let total = cenaProdukty + dostawaCenaWybrana - rabat;
-		cenaTotal.innerText = total > 0 ? total.toFixed(2) : '0.00';
+		if (cenaProdukty > 0.00) {
+			cenaTotal.innerText = total > 0 ? total.toFixed(2) : '0.00';
+		}
 	}
 
 
 	function order() {
 		if ( parseFloat(document.getElementById("cenaTotal").innerText) > 0 ) {
-			document.getElementById("loading").classList.add("active");
-			setTimeout(() => {
-				document.getElementById("orderRedirect").click();
-			}, 2500);
+			document.getElementById("orderRedirect").click();
 		}
 	}
 
@@ -192,6 +245,20 @@
 	} else {
 		deliveryRadio.disabled = false;
 		paymentRadio.disabled = false;
+	}
+
+	// Skrypt automatycznie znikający popup
+	let infoPopup = document.getElementById("infoPopup");
+	setTimeout(() => {
+		hidePopup();
+	}, 5000); 
+
+	// Skrypt znikający popup
+	function hidePopup() {
+		infoPopup.style.animation = "slideUp .8s ease-in-out";
+		setTimeout(() => {
+			infoPopup.style.display = "none";
+		}, 780); 
 	}
 
 

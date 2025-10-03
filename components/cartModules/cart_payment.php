@@ -5,25 +5,25 @@
 		<label for="payment-przelew" class="btn deliverer">
 			<img src="assets/site-images/payment-bank.svg" style="padding: .7rem .5rem;">
 			Przelw bankowy
-			<input type="radio" name="payment" id="payment-przelew">
+			<input type="radio" name="payment" id="payment-przelew" value="przelew">
 		</label>
 
 		<!-- Opcja płatności: Blik -->
 		<label for="payment-blik" class="btn deliverer">
 			<img src="assets/site-images/payment-blik.webp" style="padding: .7rem .5rem;">
-			<input type="radio" name="payment" id="payment-blik">
+			<input type="radio" name="payment" id="payment-blik" value="blik">
 		</label>
 		
 		<!-- Opcja płatności: Google Pay -->
 		<label for="payment-gpay" class="btn deliverer">
 			<img src="assets/site-images/payment-gpay.webp" style="padding: .8rem .5rem .6rem;">
-			<input type="radio" name="payment" id="payment-gpay">
+			<input type="radio" name="payment" id="payment-gpay" value="gpay">
 		</label>
 
 		<!-- Opcja płatności: Apple Pay -->
 		<label for="payment-applepay" class="btn deliverer">
 			<img src="assets/site-images/payment-applepay.webp" style="padding: .8rem .5rem .6rem;">
-			<input type="radio" name="payment" id="payment-applepay">
+			<input type="radio" name="payment" id="payment-applepay" value="applepay">
 		</label>
 	</div>
 
